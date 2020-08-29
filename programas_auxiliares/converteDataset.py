@@ -52,7 +52,7 @@ def converteDataset(caminhoEntrada, caminhoSaida):
     coord = 0
     demanda = 0
     deposito = 0
-    rdados = ''
+    dados = ''
 
     for linha in arqEntrada:
 
