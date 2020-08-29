@@ -46,60 +46,65 @@ def converte_dataset(caminhoEntrada, caminhoSaida):
 
   for nome in nomes:
     
-    arqEntrada = open(caminhoEntrada + '/' + nome, 'r')
-    arqSaida = open(caminhoSaida + '/' + nome, 'w+')
+    if nome[-4:] == '.vrp':
 
-    coord = 0
-    demanda = 0
-    depot = 0
+      arqEntrada = open(caminhoEntrada + '/' + nome, 'r')
+      arqSaida = open(caminhoSaida + '/' + nome, 'w+')
 
-    for line in arqEntrada:
+      coord = 0
+      demanda = 0
+      deposito = 0
+      resposta = ''
 
-      if line.find('DIMENSION') != -1:
-        l = [s for s in line.split() if s.isdigit()]
-        arqSaida.write(l[0] + '\n')
+      for linha in arqEntrada:
 
-      if line.find('CAPACITY') != -1:
-        l = [s for s in line.split() if s.isdigit()]
-        q = l[0]
-        arqSaida.write(l[0] + '\n')
+        if linha.find('DIMENSION') != -1:
+          l = [s for s in linha.split() if s.isdigit()]
+          resposta += l[0] + '\n'
 
-      if line.find('-1') != -1:
-        depot = 0
+        if linha.find('CAPACITY') != -1:
+          l = [s for s in linha.split() if s.isdigit()]
+          q = l[0]
+          resposta += l[0] + '\n'
 
-      if depot == 1:
-        l = [s for s in line.split() if s.isdigit()]
-        d = l[0]
+        if linha.find('-1') != -1:
+          deposito = 0
 
-      if line.find('DEPOT_SECTION') != -1:
-        demanda = 0
-        depot = 1
+        if deposito == 1:
+          l = [s for s in linha.split() if s.isdigit()]
+          d = l[0]
 
-      if demanda == 1:
-        l = [s for s in line.split()]
-        l[0] = str(int(l[0]) - 1)
-        arqSaida.write(l[0] + ' ' + l[1] + '\n')
+        if linha.find('DEPOT_SECTION') != -1:
+          demanda = 0
+          deposito = 1
 
-      if line.find('DEMAND_SECTION') != -1:
-        coord = 0
-        demanda = 1
+        if demanda == 1:
+          l = [s for s in linha.split()]
+          l[0] = str(int(l[0]) - 1)
+          resposta += l[0] + ' ' + l[1] + '\n'
+
+        if linha.find('DEMAND_SECTION') != -1:
+          coord = 0
+          demanda = 1
+          
+        if coord == 1:
+          l = [s for s in linha.split()]
+          l[0] = str(int(l[0]) - 1)
+          resposta += l[0] + ' ' + l[1] + ' ' + l[2] + '\n'
+
+        if linha.find('NODE_COORD_SECTION') != -1:
+          coord = 1
+
+      if d != '1':
+        print('[Erro]: Arquivo ' + nome + ' possui mais de um deposito')
+      elif arqSaida.write(resposta):
+        print('Arquivo ' + nome + ' convertido com sucesso')
+      else:
+        print('[Erro]: Falha ao escrever no ' + nome + ' convertido')
         
-      if coord == 1:
-        l = [s for s in line.split()]
-        l[0] = str(int(l[0]) - 1)
-        arqSaida.write(l[0] + ' ' + l[1] + ' ' + l[2] + '\n')
-
-      if line.find('NODE_COORD_SECTION') != -1:
-        coord = 1
-
-    if(d == '1'):
-      print('Arquivo ' + nome + ' convertido com sucesso')
-    else:
-      print('[Erro]: Arquivo ' + nome + ' possui mais de um deposito')
-
-    arqEntrada.close()
-    arqSaida.close()
+      arqEntrada.close()
+      arqSaida.close()
 
 # Chamada da função converte_dataset()
-# Parãmetros: [1]caminhoEntrada, [2]caminhoSaida
+# Parâmetros: [1]caminhoEntrada, [2]caminhoSaida
 converte_dataset(sys.argv[1], sys.argv[2])
