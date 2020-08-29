@@ -43,6 +43,7 @@ Formato do arquivo convertido:
 def converteDataset(caminhoEntrada, caminhoSaida):
 
   nomes = [nome for nome in os.listdir(caminhoEntrada) if nome[-4:] == '.vrp']
+  nomes.sort()
 
   for nome in nomes:
 

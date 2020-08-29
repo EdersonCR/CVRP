@@ -14,6 +14,8 @@ def geraScriptExecucao(caminhoDatasets, caminhoMain, conjuntoDataset):
     datasets = [dataset for dataset in os.listdir(caminhoDatasets) if dataset[0] == conjuntoDataset and dataset[-4:] == '.vrp']
     conjuntoDataset = 'conj-' + conjuntoDataset
 
+  datasets.sort()
+
   # Identifica o SO 
   sisOp = platform.system() 
 
@@ -23,11 +25,11 @@ def geraScriptExecucao(caminhoDatasets, caminhoMain, conjuntoDataset):
     
     for dataset in datasets:
       q = [s for s in dataset[:-4].split('k') if s.isdigit()] 
-      comando = 'python3 main.py ' + dataset[:-4] + ' ' + q[0] + '\n'
-      script += '\necho ' + comando + comando
+      comando = 'python3 main.py ' + dataset[:-4] + ' ' + q[0]
+      script += '\necho -e "\\n' + comando + '"\n' + comando + '\n'
 
-    script += '\necho Todas instâncias foram executadas\n'
-    script += 'read -p "Pressione [Enter] pra fechar...\"'
+    script += '\necho -e "\\nTodas instâncias foram executadas"\n'
+    script += 'read -p "Pressione [Enter] pra fechar..."'
 
     extensao = '.sh'
     nome = 'executa_' + sisOp + '_' + conjuntoDataset + extensao
