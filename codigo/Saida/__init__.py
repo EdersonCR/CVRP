@@ -1,0 +1,7 @@
+CAMINO_SOLUCAO = '../solucoes/' 
+CAMINHO_IMAGEM = '../imagens/'
+
+PROPORCAO_PONTO = 5
+TXT_PESO = '-peso'
+TAMANHO_PONTO = 15
+DPI = 300
