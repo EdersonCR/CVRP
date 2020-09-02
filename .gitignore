@@ -1,0 +1,13 @@
+.vscode
+
+# Arquivos de execução local Linux
+codigo/executa_Linux_conj-X.sh
+codigo/executa_Linux_conj-P.sh
+codigo/executa_Linux_conj-A.sh
+codigo/executa_Linux_all.sh
+
+# Caches dos módulos
+codigo/*/__pycache__
+
+# Arquivos de teste
+*/_teste.*
