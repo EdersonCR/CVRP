@@ -1,5 +1,5 @@
 from matplotlib import pyplot as plt
-from Saida import TAMANHO_PONTO, TXT_PESO, PROPORCAO_PONTO, CAMINHO_IMAGEM, DPI
+from Saida import TAMANHO_PONTO, TXT_PESO, PROPORCAO_PONTO, CAMINHO_IMAGEM, DPI, EXTENSAO_MATRIZ_DIST, CAMINHO_SOLUCAO
 
 ''' Função que salva imagem com os pontos plotados num gráfico 
     Entrada: coordenadas = {id: (x, y)} dicionário com as coordenas x e y dos pontos
@@ -20,3 +20,15 @@ def plotPontos(coordenadas, nome, pesos = []):
   plt.scatter(x[0], y[0], color="r", marker=".", s=TAMANHO_PONTO)
 
   plt.savefig(CAMINHO_IMAGEM + nome, dpi=DPI)
+
+''' Função que salva a matriz de distâncias 
+    Entrada: matriz = matriz de distancias
+             nome = nome do arquivo que será salvo '''
+def matrizDistancia(matriz, nome):
+
+  string = '\n'.join(' '.join('{:-8.3f}'.format(dado) for dado in linha) for linha in matriz)
+  
+  nome += EXTENSAO_MATRIZ_DIST
+  arqSaida = open (CAMINHO_SOLUCAO + nome, 'w+')
+  arqSaida.write(string)
+  arqSaida.close()
