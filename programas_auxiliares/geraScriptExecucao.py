@@ -4,8 +4,8 @@ import platform
 
 ''' Função que gera um arquivo .bat de execução dos datasets
     Entrada: caminhoDatasets = caminho do diretório dos datasets que serão excutados
-            caminhoMain = caminho do diretório do arquivo main.py
-            conjuntoDataset = letra incial dos arquivos do conjunto dos dataset ('all' para todos conjuntos) '''
+             caminhoMain = caminho do diretório do arquivo main.py
+             conjuntoDataset = letra incial dos arquivos do conjunto dos dataset ('all' para todos conjuntos) '''
 def geraScriptExecucao(caminhoDatasets, caminhoMain, conjuntoDataset):
 
   if conjuntoDataset == 'all':
@@ -24,8 +24,7 @@ def geraScriptExecucao(caminhoDatasets, caminhoMain, conjuntoDataset):
     script = '#!/bin/bash\n'
     
     for dataset in datasets:
-      q = [s for s in dataset[:-4].split('k') if s.isdigit()] 
-      comando = 'python3 main.py ' + dataset[:-4] + ' ' + q[0]
+      comando = 'python3 main.py ' + dataset[:-4]
       script += '\necho -e "\\n' + comando + '"\n' + comando + '\n'
 
     script += '\necho -e "\\nTodas instâncias foram executadas"\n'
