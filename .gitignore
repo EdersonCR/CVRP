@@ -9,5 +9,3 @@ codigo/executa_Linux_all.sh
 # Caches dos módulos
 codigo/*/__pycache__
 
-# Arquivos de teste
-*/_teste.*

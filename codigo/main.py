@@ -5,10 +5,7 @@ from Saida import (salvar as save, visualizar as vis)
 
 ''' Função principal que executa um método heuristico de otimização em uma instância de CVRP
     Entrada: dataset: Nome da instância '''
-
-
 def main(dataset):
-    print('Vai agora')
 
     # Entrada de dados
     (qtdeNos, capacVeiculo, coordenadas, demandas) = dt.leitura(dataset)
@@ -18,9 +15,9 @@ def main(dataset):
 
     # Saida de dados
     save.plotPontos(coordenadas, dataset)
-    #save.plotPontos(coordenadas, dataset, demandas)
+    # save.plotPontos(coordenadas, dataset, demandas)
     save.matrizDistancia(distancias, dataset)
-    #vis.printDadosDataset(qtdeNos, capacVeiculo, coordenadas, demandas)
+    # vis.printDadosDataset(qtdeNos, capacVeiculo, coordenadas, demandas)
     # vis.printMatrizDistancia(distancias)
 
 
