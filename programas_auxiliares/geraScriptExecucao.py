@@ -18,7 +18,7 @@ def geraScriptExecucao(caminhoDatasets, caminhoMain, conjuntoDataset):
 
   # Identifica o SO 
   sisOp = platform.system() 
-
+  
   if sisOp == 'Linux':
 
     script = '#!/bin/bash\n'
@@ -28,11 +28,24 @@ def geraScriptExecucao(caminhoDatasets, caminhoMain, conjuntoDataset):
       script += '\necho -e "\\n' + comando + '"\n' + comando + '\n'
 
     script += '\necho -e "\\nTodas instâncias foram executadas"\n'
-    script += 'read -p "Pressione [Enter] pra fechar..."'
+    script += 'read -p "Pressione [Enter] para fechar..."'
 
     extensao = '.sh'
-    nome = 'executa_' + sisOp + '_' + conjuntoDataset + extensao
+  
+  elif sisOp == 'Windows':
 
+    script = ''
+    
+    for dataset in datasets:
+      comando = 'python3 main.py ' + dataset[:-4]
+      script += '\necho.\necho "' + comando + '"\n' + comando + '\n'
+
+    script += '\necho.\necho "Todas instâncias foram executadas"\n'
+    script += 'pause'
+
+    extensao = '.bat'
+  
+  nome = 'executa_' + sisOp + '_' + conjuntoDataset + extensao
   arqSaida = open (caminhoMain + '/' + nome, 'w+')
 
   if arqSaida.write(script):
@@ -43,7 +56,7 @@ def geraScriptExecucao(caminhoDatasets, caminhoMain, conjuntoDataset):
   arqSaida.close()
 
   if sisOp == 'Linux':
-    os.system('chmod +x ' + caminhoMain + '/' + nome) # Permissão para o arquivbo ser um executável
+    os.system('chmod +x ' + caminhoMain + '/' + nome) # Permissão para o arquivo ser um executável
 
 ''' Chamada da função geraScriptExecucao()
     Parâmetros: [1]caminhoDatasets, [2]caminhoMain, [3]conjuntoDataset '''
