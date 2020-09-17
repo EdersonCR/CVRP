@@ -13,4 +13,3 @@ def geraMatrizDistancia(coordenadas):
           matriz[i][j] = matriz[j][i] = calc.distanciaPontos(coordenadas[i], coordenadas[j])
 
   return matriz
-
