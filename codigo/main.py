@@ -15,7 +15,7 @@ def main(dataset):
   mt.saveMatrizDistancia(distancias, dataset)
   
   dt.printDataset(qtdeNos, capacVeiculo, coordenadas, demandas)
-  mt.printMatrizDistancia(distancias)
+  # mt.printMatrizDistancia(distancias)
     
 ''' Chamada da função main()
   Parâmetros: [1]nomeDataset'''
