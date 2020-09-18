@@ -1,15 +1,21 @@
 CAMINHO_DATASET = '../dados/datasets/'
 CAMINHO_SOLUCAO = '../resultados/solucoes/' 
 CAMINHO_VISUALIZACAO = '../resultados/visualizacoes/'
+CAMINHO_MELHOR_SOLUCAO = '../dados/melhores_solucoes/'
 
 EXTENSAO_DATASET = '.vrp'
 EXTENSAO_SOLUCAO = '.sol'
 EXTENSAO_MATRIZ_DIST = '.dist'
 
-PROPORCAO_PONTO = 5
+PROPORCAO_PONTO = 7
 TXT_PESO = '-peso'
+TXT_SOLUCAO = '-solucao'
 TAM_FONTE_LEGENDA = 7
 TAMANHO_PONTO = 15
 TAMANHO_ROTULO = 5
+TAMANHO_LINHA = 1.0
 POSICAO_ROTULO = 0.7
+LIMITE_PLOT_CAMINHO_DEPOSITO = 20
 DPI = 300
+
+CORES = []
