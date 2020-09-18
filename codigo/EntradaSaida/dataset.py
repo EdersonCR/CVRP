@@ -1,5 +1,5 @@
 from matplotlib import pyplot as plt
-from EntradaSaida import CAMINHO_DATASET, EXTENSAO_DATASET, TAMANHO_PONTO, TXT_PESO, PROPORCAO_PONTO, CAMINHO_VISUALIZACAO, DPI
+from EntradaSaida import CAMINHO_DATASET, EXTENSAO_DATASET, TAMANHO_PONTO, TXT_PESO, PROPORCAO_PONTO, CAMINHO_VISUALIZACAO, DPI, TAM_FONTE_LEGENDA, TAMANHO_ROTULO, POSICAO_ROTULO
 
 ''' Função que faz a leitura dos dados de arquivo de dataset
     Entrada: nome = nome do arquivo de dataset
@@ -42,11 +42,17 @@ def plotDataset(coordenadas, nome, pesos = []):
   x = [coordenadas[i][0] for i in range(n)]
   y = [coordenadas[i][1] for i in range(n)]
 
-  plt.title(nome)
-  plt.scatter(x[1:], y[1:], color="g", marker=".", s=pesos)
-  plt.scatter(x[0], y[0], color="r", marker=".", s=TAMANHO_PONTO)
+  plt.scatter(x[1:], y[1:], label = 'Cliente', color = 'blue', marker = '.', s = pesos)
+  plt.scatter(x[0], y[0], label = 'Depósito', color = 'red', marker = '.', s = TAMANHO_PONTO)
 
-  plt.savefig(CAMINHO_VISUALIZACAO + nome, dpi=DPI)
+  for i, coord in enumerate(coordenadas):
+    plt.annotate(str(i), (x[i] + POSICAO_ROTULO, y[i] + POSICAO_ROTULO), fontsize = TAMANHO_ROTULO)
+  
+  plt.title(nome)
+  plt.legend(loc = 'upper left', bbox_to_anchor=(1.01, 1), fontsize = TAM_FONTE_LEGENDA, fancybox = False, edgecolor = 'black')
+
+  plt.savefig(CAMINHO_VISUALIZACAO + nome, dpi=DPI, bbox_inches='tight')
+  plt.clf()
 
 
 ''' Função que imprime dados de um dataset
