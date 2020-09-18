@@ -9,3 +9,6 @@ codigo/executa_Linux_all.sh
 # Caches dos módulos
 codigo/*/__pycache__
 
+# Resultados de execução
+resultados/
+
