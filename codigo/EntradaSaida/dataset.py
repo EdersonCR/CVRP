@@ -28,7 +28,7 @@ def leituraDataset(nome):
   return (qtdeNos, capacVeiculo, coordenadas, demandas)
 
 
-''' Função que salva imagem com os pontos plotados num gráfico 
+''' Função que salva imagem com os clientes e deposito plotados num gráfico 
     Entrada: coordenadas = {id: (x, y)} dicionário com as coordenas x e y dos pontos
              nome = nome do arquivo de imagem que será criado
              pesos = lista coms os pesos de cada ponto (assume lista vazia se não passado como argumento) '''
