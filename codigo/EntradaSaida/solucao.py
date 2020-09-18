@@ -51,7 +51,7 @@ def plotSolucao(coordenadas, nome, rotas, pesos = []):
       plt.plot([x[0], coordenadas[0][0]], [y[0], coordenadas[0][1]], linestyle = '--', color = cor, linewidth = TAMANHO_LINHA, zorder = 1)
       plt.plot([x[-1], coordenadas[0][0]], [y[-1], coordenadas[0][1]], linestyle = '--', color = cor, linewidth = TAMANHO_LINHA, zorder = 1)
 
-    plt.plot(x, y, label = f'Rota #{i!s}', color = cor, linewidth = TAMANHO_LINHA, zorder = 1)
+    plt.plot(x, y, label = f'Rota {i!s}', color = cor, linewidth = TAMANHO_LINHA, zorder = 1)
     plt.scatter(x, y, color = cor, marker = '.', s = p, zorder = 2)
     
   plt.scatter(coordenadas[0][0], coordenadas[0][1], label = 'Depósito', color = 'red', marker = '.', s = TAMANHO_PONTO, zorder = 2)
