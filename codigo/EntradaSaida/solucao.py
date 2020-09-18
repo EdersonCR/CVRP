@@ -37,13 +37,14 @@ def plotSolucao(coordenadas, nome, rotas, pesos = []):
   n = len(coordenadas)
   m = len(rotas)
   
-  nome += TXT_SOLUCAO
   nome += TXT_PESO if pesos != [] else ''
+  nome += TXT_SOLUCAO
 
   for i in range(1, m + 1):
     x = [coordenadas[no][0] for no in rotas[i]]
     y = [coordenadas[no][1] for no in rotas[i]]
-    p = [pesos[no] for no in rotas[i]] if pesos != [] else TAMANHO_PONTO
+    p = [pesos[no] * PROPORCAO_PONTO for no in rotas[i]] if pesos != [] else TAMANHO_PONTO
+    
     cor = f'C{i!s}'
 
     if m < LIMITE_PLOT_CAMINHO_DEPOSITO:
