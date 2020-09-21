@@ -1,5 +1,5 @@
 from matplotlib import pyplot as plt
-from EntradaSaida import CAMINHO_MELHOR_SOLUCAO, TXT_SOLUCAO, EXTENSAO_SOLUCAO, TXT_PESO, TAMANHO_PONTO, PROPORCAO_PONTO, POSICAO_ROTULO, POSICAO_ROTULO, TAMANHO_ROTULO, TAM_FONTE_LEGENDA, CAMINHO_VISUALIZACAO, DPI, TAMANHO_LINHA, LIMITE_PLOT_CAMINHO_DEPOSITO, CAMINHO_SOLUCAO
+from EntradaSaida import CAMINHO_MELHOR_SOLUCAO, TXT_SOLUCAO, EXTENSAO_SOLUCAO, TXT_PESO, TAMANHO_PONTO, PROPORCAO_PONTO, POSICAO_ROTULO, POSICAO_ROTULO, TAMANHO_ROTULO, TAM_FONTE_LEGENDA, CAMINHO_VISUALIZACAO, DPI, TAMANHO_LINHA_ROTA, TAMANHO_BORDA_PONTO, LIMITE_PLOT_CAMINHO_DEPOSITO, CAMINHO_SOLUCAO
 
 ''' Função que faz a leitura dos dados de arquivo de solução
     Entrada: nome = nome do arquivo de solução
@@ -48,19 +48,21 @@ def plotSolucao(coordenadas, nome, rotas, pesos = []):
     cor = f'C{i!s}'
 
     if m < LIMITE_PLOT_CAMINHO_DEPOSITO:
-      plt.plot([x[0], coordenadas[0][0]], [y[0], coordenadas[0][1]], linestyle = '--', color = cor, linewidth = TAMANHO_LINHA, zorder = 1)
-      plt.plot([x[-1], coordenadas[0][0]], [y[-1], coordenadas[0][1]], linestyle = '--', color = cor, linewidth = TAMANHO_LINHA, zorder = 1)
+      plt.plot([x[0], coordenadas[0][0]], [y[0], coordenadas[0][1]], linestyle = '--', color = cor, linewidth = TAMANHO_LINHA_ROTA, zorder = 1)
+      plt.plot([x[-1], coordenadas[0][0]], [y[-1], coordenadas[0][1]], linestyle = '--', color = cor, linewidth = TAMANHO_LINHA_ROTA, zorder = 1)
 
-    plt.plot(x, y, label = f'Rota {i!s}', color = cor, linewidth = TAMANHO_LINHA, zorder = 1)
-    plt.scatter(x, y, color = cor, marker = '.', s = p, zorder = 2)
+    plt.plot(x, y, label = f'Rota {i!s}', color = cor, linewidth = TAMANHO_LINHA_ROTA, zorder = 1)
+    plt.scatter(x, y, s = p, color = 'black', facecolor = cor, marker = '.', linewidths = TAMANHO_BORDA_PONTO, zorder = 2)
     
-  plt.scatter(coordenadas[0][0], coordenadas[0][1], label = 'Depósito', color = 'red', marker = '.', s = TAMANHO_PONTO, zorder = 2)
+  plt.scatter(coordenadas[0][0], coordenadas[0][1], s = TAMANHO_PONTO, color = 'black', facecolor = 'red', marker = '.', linewidths = TAMANHO_BORDA_PONTO, zorder = 2)
 
   x = [coordenadas[i][0] for i in range(n)]
   y = [coordenadas[i][1] for i in range(n)]
 
+  '''
   for i, coord in enumerate(coordenadas):
     plt.annotate(str(i), (x[i] + POSICAO_ROTULO, y[i] + POSICAO_ROTULO), fontsize = TAMANHO_ROTULO)
+  '''
 
   plt.title(nome)
   plt.legend(loc = 'upper left', bbox_to_anchor=(1.01, 1), fontsize = TAM_FONTE_LEGENDA, fancybox = False, edgecolor = 'black')

@@ -1,5 +1,5 @@
 from matplotlib import pyplot as plt
-from EntradaSaida import CAMINHO_DATASET, EXTENSAO_DATASET, TAMANHO_PONTO, TXT_PESO, PROPORCAO_PONTO, CAMINHO_VISUALIZACAO, DPI, TAM_FONTE_LEGENDA, TAMANHO_ROTULO, POSICAO_ROTULO
+from EntradaSaida import CAMINHO_DATASET, EXTENSAO_DATASET, TAMANHO_PONTO, TXT_PESO, PROPORCAO_PONTO, CAMINHO_VISUALIZACAO, DPI, TAM_FONTE_LEGENDA, TAMANHO_ROTULO, TAMANHO_BORDA_PONTO, POSICAO_ROTULO
 
 ''' Função que faz a leitura dos dados de arquivo de dataset
     Entrada: nome = nome do arquivo de dataset
@@ -42,8 +42,8 @@ def plotDataset(coordenadas, nome, pesos = []):
   x = [coordenadas[i][0] for i in range(n)]
   y = [coordenadas[i][1] for i in range(n)]
 
-  plt.scatter(x[1:], y[1:], label = 'Cliente', color = 'blue', marker = '.', s = pesos)
-  plt.scatter(x[0], y[0], label = 'Depósito', color = 'red', marker = '.', s = TAMANHO_PONTO)
+  plt.scatter(x[1:], y[1:], s = pesos, label = 'Cliente', color = 'black', facecolor='green', marker = '.', linewidths = TAMANHO_BORDA_PONTO)
+  plt.scatter(x[0], y[0], s = TAMANHO_PONTO, label = 'Depósito', color = 'black', facecolor='red', marker = '.', linewidths = TAMANHO_BORDA_PONTO)
 
   for i, coord in enumerate(coordenadas):
     plt.annotate(str(i), (x[i] + POSICAO_ROTULO, y[i] + POSICAO_ROTULO), fontsize = TAMANHO_ROTULO)
