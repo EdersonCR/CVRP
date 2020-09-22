@@ -34,38 +34,30 @@ def leituraMelhorSolucao(nome):
              pesos = lista coms os pesos de cada ponto (assume lista vazia se não passado como argumento) '''
 def plotSolucao(coordenadas, nome, rotas, pesos = []):
 
-  n = len(coordenadas)
-  m = len(rotas)
-  
   nome += TXT_PESO if pesos != [] else ''
   nome += TXT_SOLUCAO
 
-  for i in range(1, m + 1):
-    x = [coordenadas[no][0] for no in rotas[i]]
-    y = [coordenadas[no][1] for no in rotas[i]]
-    p = [pesos[no] * PROPORCAO_PONTO for no in rotas[i]] if pesos != [] else TAMANHO_PONTO
+  for rota in rotas:
+    x = [coordenadas[no][0] for no in rotas[rota]]
+    y = [coordenadas[no][1] for no in rotas[rota]]
+    p = [pesos[no] * PROPORCAO_PONTO for no in rotas[rota]] if pesos != [] else TAMANHO_PONTO
     
-    cor = f'C{i!s}'
+    cor = f'C{rota!s}'
 
-    if m < LIMITE_PLOT_CAMINHO_DEPOSITO:
+    if len(rotas) < LIMITE_PLOT_CAMINHO_DEPOSITO:
       plt.plot([x[0], coordenadas[0][0]], [y[0], coordenadas[0][1]], linestyle = '--', color = cor, linewidth = TAMANHO_LINHA_ROTA, zorder = 1)
       plt.plot([x[-1], coordenadas[0][0]], [y[-1], coordenadas[0][1]], linestyle = '--', color = cor, linewidth = TAMANHO_LINHA_ROTA, zorder = 1)
 
-    plt.plot(x, y, label = f'Rota {i!s}', color = cor, linewidth = TAMANHO_LINHA_ROTA, zorder = 1)
+    plt.plot(x, y, label = f'Rota {rota!s}', color = cor, linewidth = TAMANHO_LINHA_ROTA, zorder = 1)
     plt.scatter(x, y, s = p, color = 'black', facecolor = cor, marker = '.', linewidths = TAMANHO_BORDA_PONTO, zorder = 2)
     
   plt.scatter(coordenadas[0][0], coordenadas[0][1], s = TAMANHO_PONTO, color = 'black', facecolor = 'red', marker = '.', linewidths = TAMANHO_BORDA_PONTO, zorder = 2)
 
-  x = [coordenadas[i][0] for i in range(n)]
-  y = [coordenadas[i][1] for i in range(n)]
-
-  '''
-  for i, coord in enumerate(coordenadas):
-    plt.annotate(str(i), (x[i] + POSICAO_ROTULO, y[i] + POSICAO_ROTULO), fontsize = TAMANHO_ROTULO)
-  '''
+  for no in coordenadas:
+    plt.annotate(str(no), (coordenadas[no][0] + POSICAO_ROTULO, coordenadas[no][1] + POSICAO_ROTULO), fontsize = TAMANHO_ROTULO)
 
   plt.title(nome)
-  plt.legend(loc = 'upper left', bbox_to_anchor=(1.01, 1), fontsize = TAM_FONTE_LEGENDA, fancybox = False, edgecolor = 'black')
+  plt.legend(loc = 'upper left', bbox_to_anchor=(1.01, 1.0125), fontsize = TAM_FONTE_LEGENDA, fancybox = False, edgecolor = 'black')
 
   plt.savefig(CAMINHO_VISUALIZACAO + nome, dpi=DPI, bbox_inches='tight')
   plt.clf()
@@ -81,8 +73,8 @@ def printSolucao(custo, solOtima, qtdeRotas, rotas):
   print(f'Custo: {custo!s}')
   print(f'Ótima: {solOtima}')
   print(f'Rotas: {qtdeRotas!s}')
-  for i in range(1, len(rotas) + 1):
-    print(f'Rota #{i!s}: ' + ' '.join(str(no) for no in rotas[i]))
+  for rota in rotas:
+    print(f'Rota #{rota!s}: ' + ' '.join(str(no) for no in rotas[rota]))
 
 ''' Função que salva em um arquivos os dados de uma solução
     Entrada: custo = custo total (distância) da solução
@@ -95,8 +87,8 @@ def saveSolucao(custo, solOtima, qtdeRotas, rotas, nome):
   string += f'Ótima: {solOtima}\n'
   string += f'Rotas: {qtdeRotas!s}\n'
 
-  for i in range(1, len(rotas) + 1):
-    string += f'Rota #{i!s}: ' + ' '.join(str(no) for no in rotas[i]) + '\n'
+  for rota in rotas:
+    string += f'Rota #{rota!s}: ' + ' '.join(str(no) for no in rotas[rota]) + '\n'
 
   nome += EXTENSAO_SOLUCAO
   arqSaida = open (CAMINHO_SOLUCAO + nome, 'w+')

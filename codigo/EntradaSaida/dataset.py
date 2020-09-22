@@ -34,22 +34,20 @@ def leituraDataset(nome):
              pesos = lista coms os pesos de cada ponto (assume lista vazia se não passado como argumento) '''
 def plotDataset(coordenadas, nome, pesos = []):
 
-  n = len(coordenadas)
-
   nome += TXT_PESO if pesos != [] else ''
   pesos = TAMANHO_PONTO if pesos == [] else [p * PROPORCAO_PONTO for p in pesos[1:]]
 
-  x = [coordenadas[i][0] for i in range(n)]
-  y = [coordenadas[i][1] for i in range(n)]
+  x = [no[0] for no in coordenadas.values()]
+  y = [no[1] for no in coordenadas.values()]
 
-  plt.scatter(x[1:], y[1:], s = pesos, label = 'Cliente', color = 'black', facecolor='green', marker = '.', linewidths = TAMANHO_BORDA_PONTO)
+  plt.scatter(x[1:], y[1:], s = pesos, label = 'Cliente', color = 'black', facecolor='blue', marker = '.', linewidths = TAMANHO_BORDA_PONTO)
   plt.scatter(x[0], y[0], s = TAMANHO_PONTO, label = 'Depósito', color = 'black', facecolor='red', marker = '.', linewidths = TAMANHO_BORDA_PONTO)
 
-  for i, coord in enumerate(coordenadas):
-    plt.annotate(str(i), (x[i] + POSICAO_ROTULO, y[i] + POSICAO_ROTULO), fontsize = TAMANHO_ROTULO)
+  for no in coordenadas:
+    plt.annotate(str(no), (x[no] + POSICAO_ROTULO, y[no] + POSICAO_ROTULO), fontsize = TAMANHO_ROTULO)
   
   plt.title(nome)
-  plt.legend(loc = 'upper left', bbox_to_anchor=(1.01, 1), fontsize = TAM_FONTE_LEGENDA, fancybox = False, edgecolor = 'black')
+  plt.legend(loc = 'upper left', bbox_to_anchor=(1.01, 1.0125), fontsize = TAM_FONTE_LEGENDA, fancybox = False, edgecolor = 'black')
 
   plt.savefig(CAMINHO_VISUALIZACAO + nome, dpi=DPI, bbox_inches='tight')
   plt.clf()
