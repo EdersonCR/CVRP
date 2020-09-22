@@ -16,11 +16,11 @@ Formato do arquivo de entrada:
 Formato do arquivo convertido:
   Custo: <distancia>
   Otima: <solOtima>
-  Veiculos: <M>
+  Veiculos: <K>
   Rota 1: <id_no_1.1> <id_no_1.2> ... <id_no_1.N>
   Rota 2: <id_no_2.1> <id_no_2.2> ... <id_no_2.N>
   ...
-  Rota M: <id_no_M.1> <id_no_M.2> ... <id_no_M.N>
+  Rota K: <id_no_K.1> <id_no_K.2> ... <id_no_K.N>
 '''
 def converteSolucao(caminhoEntrada, caminhoSaida):
 

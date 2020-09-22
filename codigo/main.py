@@ -1,30 +1,29 @@
 import sys
-from Entrada import dataset as dt
-from Preprocessamento import distancia as dist
-from Saida import (salvar as save, visualizar as vis)
+from EntradaSaida import (dataset as dt, distancia as dist, solucao as sol)
+from Preprocessamento import preprocessamento as pre
 
 ''' Função principal que executa um método heuristico de otimização em uma instância de CVRP
-    Entrada: dataset: Nome da instância '''
-
-
+    Entrada: dataset: Nome da instância (sem extensão)'''
 def main(dataset):
-    print('Vai agora')
 
-    # Entrada de dados
-    (qtdeNos, capacVeiculo, coordenadas, demandas) = dt.leitura(dataset)
+  (qtdeNos, capacVeiculo, coordenadas, demandas) = dt.leituraDataset(dataset)
+  (custoMelhor, solOtimaMelhor, qtdeRotasMelhor, rotasMelhor) = sol.leituraMelhorSolucao(dataset)
 
-    # Preprocessamento
-    distancias = dist.geraMatrizDistancia(coordenadas)
+  distancias = pre.geraDicionarioDistancia(coordenadas)
 
-    # Saida de dados
-    save.plotPontos(coordenadas, dataset)
-    #save.plotPontos(coordenadas, dataset, demandas)
-    save.matrizDistancia(distancias, dataset)
-    #vis.printDadosDataset(qtdeNos, capacVeiculo, coordenadas, demandas)
-    # vis.printMatrizDistancia(distancias)
+  dt.plotDataset(coordenadas, dataset)
+  dt.plotDataset(coordenadas, dataset, demandas)
+  sol.plotSolucao(coordenadas, dataset, rotasMelhor)
+  sol.plotSolucao(coordenadas, dataset, rotasMelhor, demandas)
 
+  dist.saveDicionarioDistancia(distancias, dataset)
+  sol.saveSolucao(custoMelhor, solOtimaMelhor, qtdeRotasMelhor, rotasMelhor, dataset)
 
+  # dt.printDataset(qtdeNos, capacVeiculo, coordenadas, demandas)
+  # dist.printDicionarioDistancia(distancias)
+  # sol.printSolucao(custoMelhor, solOtimaMelhor, qtdeRotasMelhor, rotasMelhor)
+    
 ''' Chamada da função main()
-    Parâmetros: [1]nomeDataset'''
+  Parâmetros: [1]nomeDataset'''
 if __name__ == '__main__':
-    main(sys.argv[1])
+  main(sys.argv[1])

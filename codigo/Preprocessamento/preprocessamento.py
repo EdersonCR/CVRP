@@ -14,3 +14,15 @@ def geraMatrizDistancia(coordenadas):
 
   return matriz
 
+''' Função que cria uma matriz de distâncias
+    Entrada: coordenadas = {id: (x, y)} dicionário com as coordenas x e y dos pontos
+    Saída: {id: [ distancia ]} dicionario com as listas das distancias entre os pontos'''
+def geraDicionarioDistancia(coordenadas):
+
+  dicionario = {}
+
+  for i in coordenadas:
+    dicionario[i] = [calc.distanciaPontos(coordenadas[i], coordenadas[j]) for j in coordenadas]
+
+  return dicionario
+  
