@@ -31,8 +31,9 @@ def leituraDataset(nome):
 ''' Função que salva imagem com os clientes e deposito plotados num gráfico 
     Entrada: coordenadas = {id: (x, y)} dicionário com as coordenas x e y dos pontos
              nome = nome do arquivo de imagem que será criado
+             rotulo = Indicador se a imagem de ser gerada com rótulo nos nós (se rotulo = 'comRot' gera rotulos)
              pesos = lista coms os pesos de cada ponto (assume lista vazia se não passado como argumento) '''
-def plotDataset(coordenadas, nome, pesos = []):
+def plotDataset(coordenadas, nome, rotulo, pesos = []):
 
   nome += TXT_PESO if pesos != [] else ''
   pesos = TAMANHO_PONTO if pesos == [] else [p * PROPORCAO_PONTO for p in pesos[1:]]
@@ -43,8 +44,9 @@ def plotDataset(coordenadas, nome, pesos = []):
   plt.scatter(x[1:], y[1:], s = pesos, label = 'Cliente', color = 'black', facecolor='blue', marker = '.', linewidths = TAMANHO_BORDA_PONTO)
   plt.scatter(x[0], y[0], s = TAMANHO_PONTO, label = 'Depósito', color = 'black', facecolor='red', marker = '.', linewidths = TAMANHO_BORDA_PONTO)
 
-  for no in coordenadas:
-    plt.annotate(str(no), (x[no] + POSICAO_ROTULO, y[no] + POSICAO_ROTULO), fontsize = TAMANHO_ROTULO)
+  if rotulo == 'comRot':
+    for no in coordenadas:
+      plt.annotate(str(no), (x[no] + POSICAO_ROTULO, y[no] + POSICAO_ROTULO), fontsize = TAMANHO_ROTULO)
   
   plt.title(nome)
   plt.legend(loc = 'upper left', bbox_to_anchor=(1.01, 1.0125), fontsize = TAM_FONTE_LEGENDA, fancybox = False, edgecolor = 'black')

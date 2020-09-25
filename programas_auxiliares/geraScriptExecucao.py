@@ -24,7 +24,7 @@ def geraScriptExecucao(caminhoDatasets, caminhoMain, conjuntoDataset):
     script = '#!/bin/bash\n'
     
     for dataset in datasets:
-      comando = 'python3 main.py ' + dataset[:-4]
+      comando = 'python3 main.py ' + dataset[:-4] + ' semImg semRot'
       script += '\necho -e "\\n' + comando + '"\n' + comando + '\n'
 
     script += '\necho -e "\\nTodas instâncias foram executadas"\n'
@@ -37,7 +37,7 @@ def geraScriptExecucao(caminhoDatasets, caminhoMain, conjuntoDataset):
     script = ''
     
     for dataset in datasets:
-      comando = 'python3 main.py ' + dataset[:-4]
+      comando = 'python3 main.py ' + dataset[:-4] + ' semImg semRot'
       script += '\necho.\necho "' + comando + '"\n' + comando + '\n'
 
     script += '\necho.\necho "Todas instâncias foram executadas"\n'
