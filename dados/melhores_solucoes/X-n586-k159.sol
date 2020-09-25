@@ -1,6 +1,5 @@
 Custo: 190316
 Ótima: não
-Veículos: 159
 Rota #1: 461 354 523
 Rota #2: 584 497 511 142
 Rota #3: 181 232 458

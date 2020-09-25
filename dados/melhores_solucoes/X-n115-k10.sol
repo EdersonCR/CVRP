@@ -1,6 +1,5 @@
 Custo: 12747
 Ótima: sim
-Veículos: 10
 Rota #1: 10
 Rota #2: 59 42 35 99 49 79 47 109 18 93 3 32 15
 Rota #3: 16 5 6
