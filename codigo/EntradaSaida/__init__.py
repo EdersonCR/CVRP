@@ -2,10 +2,12 @@ CAMINHO_DATASET = '../dados/datasets/'
 CAMINHO_SOLUCAO = '../resultados/solucoes/' 
 CAMINHO_VISUALIZACAO = '../resultados/visualizacoes/'
 CAMINHO_MELHOR_SOLUCAO = '../dados/melhores_solucoes/'
+CAMINHO_TABELA = '../resultados/' 
 
 EXTENSAO_DATASET = '.vrp'
 EXTENSAO_SOLUCAO = '.sol'
 EXTENSAO_MATRIZ_DIST = '.dist'
+EXTENSAO_TABULCAO_DADOS = '.csv'
 
 PROPORCAO_PONTO = 7
 TXT_PESO = '-peso'
