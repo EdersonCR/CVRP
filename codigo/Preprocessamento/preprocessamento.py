@@ -14,6 +14,7 @@ def geraMatrizDistancia(coordenadas):
 
   return matriz
 
+
 ''' Função que cria uma matriz de distâncias
     Entrada: coordenadas = {id: (x, y)} dicionário com as coordenas x e y dos pontos
     Saída: dicionario = {id: [ distancias ]} dicionario com as listas das distancias entre os pontos'''

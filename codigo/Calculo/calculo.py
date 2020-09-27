@@ -27,7 +27,11 @@ def funcaoObjetivo(rotas, distancias):
   
   return custo
 
-'''
-'''
-def gap(custo, custoMelhor):
-    return (custo - custoMelhor) / custoMelhor * 100
+
+''' Função que calcula a distância percentual de uma solução em relação a uma solução melhor
+    Entrada: custo = valor de uma solução calculada
+             custoMelhorSol = valor da melhor solução disponível
+    Saida: gap = percentual de distância entre as soluções '''
+def gap(custo, custoMelhorSol):
+  gap = (custo - custoMelhorSol) / custoMelhorSol * 100
+  return gap
