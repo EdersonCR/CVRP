@@ -7,11 +7,18 @@ CAMINHO_TABELA = '../resultados/'
 EXTENSAO_DATASET = '.vrp'
 EXTENSAO_SOLUCAO = '.sol'
 EXTENSAO_MATRIZ_DIST = '.dist'
-EXTENSAO_TABULCAO_DADOS = '.csv'
+EXTENSAO_TABELA = '.csv'
+
+TXT_PESO = 'peso'
+TXT_SOLUCAO = 'solucao'
+TXT_TABELA = 'resultado'
+TXT_CLIENTE = 'Cliente'
+TXT_DEPOSITO = 'Depósito'
+COR_CLIENTE = 'blue'
+COR_DEPOSITO = 'red'
+COR_BORDA = 'black'
 
 PROPORCAO_PONTO = 7
-TXT_PESO = '-peso'
-TXT_SOLUCAO = '-solucao'
 TAM_FONTE_LEGENDA = 7
 TAMANHO_PONTO = 40
 TAMANHO_ROTULO = 5
