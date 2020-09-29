@@ -34,10 +34,10 @@ def geraScriptExecucao(caminhoDatasets, caminhoMain, conjuntoDataset):
   
   elif sisOp == 'Windows':
 
-    script = ''
+    script = 'echo off\n'
     
     for dataset in datasets:
-      comando = 'python3 main.py ' + dataset[:-4] + ' semImg semRot'
+      comando = 'python main.py ' + dataset[:-4] + ' semImg semRot'
       script += '\necho.\necho "' + comando + '"\n' + comando + '\n'
 
     script += '\necho.\necho "Todas instâncias foram executadas"\n'
