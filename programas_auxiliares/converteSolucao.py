@@ -16,7 +16,6 @@ Formato do arquivo de entrada:
 Formato do arquivo convertido:
   Custo: <distancia>
   Otima: <solOtima>
-  Veiculos: <K>
   Rota 1: <id_no_1.1> <id_no_1.2> ... <id_no_1.N>
   Rota 2: <id_no_2.1> <id_no_2.2> ... <id_no_2.N>
   ...
@@ -50,8 +49,7 @@ def converteSolucao(caminhoEntrada, caminhoSaida):
         dados += 'Rota #' + str(qtdeVeiculos) + ': ' + ' '.join(no for no in nos) + '\n'
 
       if linha.find('Cost') != -1:
-        custo = [s for s in linha.split() if s.isdigit()]
-        dados = 'Veículos: ' + str(qtdeVeiculos) + '\n' + dados  
+        custo = [s for s in linha.split() if s.isdigit()] 
         dados = 'Ótima: ' + solOtima + '\n' + dados 
         dados = 'Custo: ' + custo[0] + '\n' + dados
 

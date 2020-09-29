@@ -1,6 +1,5 @@
 Custo: 221824
 Ótima: sim
-Veículos: 139
 Rota #1: 158 179 404 240
 Rota #2: 7 460 312
 Rota #3: 273 89 296

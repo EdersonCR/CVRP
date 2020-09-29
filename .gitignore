@@ -10,5 +10,8 @@ codigo/executa_Linux_all.sh
 codigo/*/__pycache__
 
 # Resultados de execução
-resultados/
+resultados/*.*
+resultados/*/*
+!resultados/*/.gitkeep
+
 
