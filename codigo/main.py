@@ -27,7 +27,7 @@ def main(instancia, imagem, rotulo):
   t_total = time() - t_inicio
 
   # Salvar dados em arquivo
-  #sol.saveSolucao(custo, t_total, rotasMelhorSol, instancia)
+  sol.saveSolucao(custo, t_total, rotasMelhorSol, instancia)
   sol.tabulacaoResultado(instancia, custo, t_total, custoMelhorSol, solOtimaMelhorSol, gap, rotasMelhorSol)
 
   if imagem == 'comImg':
