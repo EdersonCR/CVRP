@@ -9,8 +9,6 @@ EXTENSAO_SOLUCAO = '.sol'
 EXTENSAO_MATRIZ_DIST = '.dist'
 EXTENSAO_TABELA = '.csv'
 
-TXT_PESO = 'peso'
-TXT_SOLUCAO = 'solucao'
 TXT_TABELA = 'resultado'
 TXT_CLIENTE = 'Cliente'
 TXT_DEPOSITO = 'Depósito'

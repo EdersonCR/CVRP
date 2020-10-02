@@ -1,5 +1,5 @@
 from matplotlib import pyplot as plt
-from EntradaSaida import CAMINHO_DATASET, EXTENSAO_DATASET, TAMANHO_PONTO, TXT_PESO, PROPORCAO_PONTO, CAMINHO_VISUALIZACAO, DPI, TAM_FONTE_LEGENDA, TAMANHO_ROTULO, TAMANHO_BORDA_PONTO, POSICAO_ROTULO, TXT_CLIENTE, TXT_DEPOSITO, COR_CLIENTE, COR_DEPOSITO, COR_BORDA
+from EntradaSaida import CAMINHO_DATASET, EXTENSAO_DATASET, TAMANHO_PONTO, PROPORCAO_PONTO, CAMINHO_VISUALIZACAO, DPI, TAM_FONTE_LEGENDA, TAMANHO_ROTULO, TAMANHO_BORDA_PONTO, POSICAO_ROTULO, TXT_CLIENTE, TXT_DEPOSITO, COR_CLIENTE, COR_DEPOSITO, COR_BORDA
 
 ''' Função que faz a leitura dos dados de arquivo de dataset
     Entrada: nome = nome da instância
@@ -30,12 +30,11 @@ def leituraDataset(nome):
 
 ''' Função que salva imagem com os clientes e deposito plotados num gráfico 
     Entrada: coordenadas = {id: (x, y)} dicionário com as coordenas x e y dos pontos
-             nome = nome da instância
+             nome = nome do arquivo e titulo
              rotulo = indicador se a imagem de ser gerada com rótulo nos nós (se rotulo = 'comRot' gera rotulos)
              pesos = lista coms os pesos (demandas) de cada ponto (assume lista vazia se não passado como argumento) '''
 def plotDataset(coordenadas, nome, rotulo, pesos = []):
 
-  nome += '-' + TXT_PESO if pesos != [] else ''
   pesos = TAMANHO_PONTO if pesos == [] else [p * PROPORCAO_PONTO for p in pesos[1:]]
 
   x = [no[0] for no in coordenadas.values()]

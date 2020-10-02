@@ -1,6 +1,6 @@
 import pandas as pd
 from matplotlib import pyplot as plt
-from EntradaSaida import CAMINHO_MELHOR_SOLUCAO, TXT_SOLUCAO, EXTENSAO_SOLUCAO, TXT_PESO, TAMANHO_PONTO, PROPORCAO_PONTO, POSICAO_ROTULO, POSICAO_ROTULO, TAMANHO_ROTULO, TAM_FONTE_LEGENDA, CAMINHO_VISUALIZACAO, DPI, TAMANHO_LINHA_ROTA, TAMANHO_BORDA_PONTO, LIMITE_PLOT_CAMINHO_DEPOSITO, CAMINHO_SOLUCAO, EXTENSAO_TABELA, CAMINHO_TABELA, TXT_TABELA, COR_DEPOSITO, COR_BORDA
+from EntradaSaida import CAMINHO_MELHOR_SOLUCAO, EXTENSAO_SOLUCAO, TAMANHO_PONTO, PROPORCAO_PONTO, POSICAO_ROTULO, POSICAO_ROTULO, TAMANHO_ROTULO, TAM_FONTE_LEGENDA, CAMINHO_VISUALIZACAO, DPI, TAMANHO_LINHA_ROTA, TAMANHO_BORDA_PONTO, LIMITE_PLOT_CAMINHO_DEPOSITO, CAMINHO_SOLUCAO, EXTENSAO_TABELA, CAMINHO_TABELA, TXT_TABELA, COR_DEPOSITO, COR_BORDA
 
 ''' Função que faz a leitura dos dados de arquivo que contém a melhor solução
     Entrada: nome = nome a instância
@@ -30,14 +30,11 @@ def leituraMelhorSolucao(nome):
 ''' Função que salva imagem com os clientes, o deposito e as rotas plotados em um gráfico 
     Entrada: coordenadas = {id: (x, y)} dicionário com as coordenas x e y dos pontos
              rotas = {id_rota: [ nós ]} dicionário com as listas de nós das rotas
-             nome = nome da intânciao
+             nome = nome do arquivo e titulo
              rotulo = indicador se a imagem deve ser gerada com rótulo nos nós (se rotulo = 'comRot' gera rotulos)
              pesos = lista coms os pesos (demandas) de cada ponto (assume lista vazia se não passado como argumento) '''
 def plotSolucao(coordenadas, rotas, nome, rotulo, pesos = []):
-
-  nome += '-' + TXT_PESO if pesos != [] else ''
-  nome += '-' + TXT_SOLUCAO
-
+  
   for rota in rotas:
     x = [coordenadas[no][0] for no in rotas[rota]]
     y = [coordenadas[no][1] for no in rotas[rota]]
@@ -58,8 +55,8 @@ def plotSolucao(coordenadas, rotas, nome, rotulo, pesos = []):
   plt.scatter(coordenadas[0][0], coordenadas[0][1], s = TAMANHO_PONTO, color = COR_BORDA, facecolor = COR_DEPOSITO, marker = '.', linewidths = TAMANHO_BORDA_PONTO, zorder = 2)
 
   if rotulo == 'comRot':
-    for no in coordenadas:
-      plt.annotate(str(no), (coordenadas[no][0] + POSICAO_ROTULO, coordenadas[no][1] + POSICAO_ROTULO), fontsize = TAMANHO_ROTULO)
+    for i, no in enumerate(coordenadas):
+      plt.annotate(str(demandas[i]), (coordenadas[no][0] + POSICAO_ROTULO, coordenadas[no][1] + POSICAO_ROTULO), fontsize = TAMANHO_ROTULO)
 
   plt.title(nome)
   plt.legend(loc = 'upper left', bbox_to_anchor=(1.01, 1.0125), fontsize = TAM_FONTE_LEGENDA, fancybox = False, edgecolor = 'black')
@@ -84,7 +81,7 @@ def printSolucao(custo, tempo, rotas):
     Entrada: custo = custo total (distância) da solução
              tempo = tempo gasto para calcular a solução
              rotas = {id_rota: [ nós ]} dicionário com as listas de nós das rotas 
-             nome = nome da instância '''
+             nome = nome do arquivo '''
 def saveSolucao(custo, tempo, rotas, nome):
   
   string = f'Custo: {custo!s}\n'
@@ -100,17 +97,18 @@ def saveSolucao(custo, tempo, rotas, nome):
 
 
 ''' Função que salva e agrega o resultado de uma solução em uma tabela em um arquivo
-    Entrada: nome = nome da instância
+    Entrada: instancia = nome da instância
+             nomeArq = complemento do nome do arquivo em que serão agregados os dados
              custo = custo total (distância) da solução calculada
              tempo = tempo gasto para calcuar a solução
              custoMelhorSol = custo da melhor solução disponível
              solOtima = indicador se a melhor solução é ótima ou não
              gap = valor percentual da distância da solução calculada em relação a melhor solução
-             rotas = {id_rota: [ nós ]} dicionário com as listas de nós das rotas da solução calculada'''
-def tabulacaoResultado(nome, custo, tempo, custoMelhorSol, solOtima, gap, rotas):
+             rotas = {id_rota: [ clientes ]} dicionário com as listas de clientes das rotas da solução calculada'''
+def tabulacaoResultado(instancia, nomeArq, custo, tempo, custoMelhorSol, solOtima, gap, rotas):
   
   resultado = pd.DataFrame({
-    'Instância': [nome],
+    'Instância': [instancia],
     'Custo': [custo],
     'Tempo (s)': [f'{tempo:.4f}'.replace('.',',')],
     'Melhor Solução': [custoMelhorSol],
@@ -119,5 +117,6 @@ def tabulacaoResultado(nome, custo, tempo, custoMelhorSol, solOtima, gap, rotas)
     'Rotas': [f'{rotas}']
   })
 
-  resultado.to_csv(CAMINHO_TABELA + TXT_TABELA + EXTENSAO_TABELA, mode = 'a+', sep = ';', encoding='utf8', index = False, header = False)
+  nomeArq = TXT_TABELA + nomeArq
+  resultado.to_csv(CAMINHO_TABELA + nomeArq +  EXTENSAO_TABELA, mode = 'a+', sep = ';', encoding='utf8', index = False, header = False)
  
