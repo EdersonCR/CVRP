@@ -13,8 +13,6 @@ def heristicaAleatoria(qtdeNos, capacVeiculo, demandas):
   clientes = [c for c in range(1, qtdeNos)]
   clientes = sample(clientes, len(clientes))
 
-  print(clientes)
-
   demandaRota = 0
   numRota = 1
   rotas = {}
