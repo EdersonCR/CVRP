@@ -1,14 +1,18 @@
 import sys
-from time import time
+from time import *
 from EntradaSaida import (dataset as dt, distancia as dist, solucao as sol)
 from Preprocessamento import preprocessamento as pre
+from Construcao import construcao as con
+from Refinamento import refinamento as ref
 from Calculo import calculo as calc
 
 ''' Função principal que executa um método heuristico de otimização em uma instância de CVRP
     Entrada: instancia = nome da instância (sem extensão)
-             imagem = indicador se deve ser gerada as imagens da instância plotadas (se imagem = 'comImg' gera imagens)
-             rotulo = indicador se a imagem da instância deve ser gerada com rótulo nos nós (se rotulo = 'comRot' gera rotulos) '''
-def main(instancia, imagem, rotulo):
+             metodoConstrucao = indicador de qual heuristica contrutiva sera executada ('gul' ou 'ale')
+             refinamento = indicador se o algortmo deve realizar metodo refinamento da solucao ('comRef' ou 'semRef')
+             imagem = indicador se deve ser gerada as imagens da instância plotadas ('comImg'  ou 'semImg')
+             rotulo = indicador se a imagem da instância deve ser gerada com rótulo nos nós ('comRot' ou 'semRot') '''
+def main(instancia, metodoConstrucao, refinamento, imagem, rotulo):
 
   # Entrada de dados
   (qtdeNos, capacVeiculo, coordenadas, demandas) = dt.leituraDataset(instancia)
@@ -17,26 +21,31 @@ def main(instancia, imagem, rotulo):
   # Preprocessamento
   distancias = pre.geraDicionarioDistancia(coordenadas)
 
-  # Calculo funcação objetivo
   t_inicio = time()
 
-  custo = calc.funcaoObjetivo(rotasMelhorSol, distancias)
+  # Heristica construtiva
+  rotas = con.heristicaConstrutiva(metodoConstrucao, qtdeNos, capacVeiculo, demandas, distancias)
 
-  gap = calc.gap(custo, custoMelhorSol)
-  
+  # Heuristica de refinamento
+  if refinamento == 'comRef':
+    rotas = ref.heuristicaRefinamento(qtdeNos, capacVeiculo, demandas, distancias, rotas)
+
   t_total = time() - t_inicio
 
+  custo = calc.funcaoObjetivo(rotas, distancias)
+  gap = calc.gap(custo, custoMelhorSol)
+
   # Salvar dados em arquivo
-  sol.saveSolucao(custo, t_total, rotasMelhorSol, instancia)
-  sol.tabulacaoResultado(instancia, custo, t_total, custoMelhorSol, solOtimaMelhorSol, gap, rotasMelhorSol)
+  complementoNomeArq = '_' + metodoConstrucao + '_' + refinamento
+  sol.saveSolucao(custo, t_total, rotasMelhorSol, instancia + complementoNomeArq)
+  sol.tabulacaoResultado(instancia, complementoNomeArq, custo, t_total, custoMelhorSol, solOtimaMelhorSol, gap, rotas)
 
   if imagem == 'comImg':
     dt.plotDataset(coordenadas, instancia, rotulo)
-    dt.plotDataset(coordenadas, instancia, rotulo, demandas)
-    sol.plotSolucao(coordenadas, rotasMelhorSol, instancia, rotulo)
-    sol.plotSolucao(coordenadas, rotasMelhorSol, instancia, rotulo, demandas)
+    sol.plotSolucao(coordenadas, rotas, instancia + complementoNomeArq, rotulo)
+    sol.plotSolucao(coordenadas, rotasMelhorSol, instancia + '_melhor', rotulo)
     
 ''' Chamada da função main()
-  Parâmetros: [1]nomeInstancia, [2]gerarImagens, [3]gerarRotuloImagens'''
+  Parâmetros: [1]nomeInstancia, [2]metodoConstrucao, [3]realizarRefinamento, [4]gerarImagens, [5]gerarRotuloImagens'''
 if __name__ == '__main__':
-  main(sys.argv[1], sys.argv[2], sys.argv[3])
+  main(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5])
