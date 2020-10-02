@@ -1,4 +1,4 @@
-from math import sqrt
+from math import *
 
 ''' Função que calcula a distância entre dois pontos (arredonda o valor para o inteiro mais próximo)
     Entrada: pontoA = (x, y) coordenasdas x e y do ponto A 
