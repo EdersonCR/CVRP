@@ -11,7 +11,7 @@ from Calculo import calculo as calc
              metodoConstrucao = indicador de qual heuristica contrutiva sera executada ('gul' ou 'ale')
              refinamento = indicador se o algortmo deve realizar metodo refinamento da solucao ('comRef' ou 'semRef')
              imagem = indicador se deve ser gerada as imagens da instância plotadas ('comImg'  ou 'semImg')
-             rotulo = indicador se a imagem da instância deve ser gerada com rótulo nos nós ('comRot' ou 'semRot') '''
+             rotulo = indicador de qual rótulo de ser adicionado a imagem da instância ('id', 'dem' ou 'semRot') '''
 def main(instancia, metodoConstrucao, refinamento, imagem, rotulo):
 
   # Entrada de dados
@@ -41,9 +41,9 @@ def main(instancia, metodoConstrucao, refinamento, imagem, rotulo):
   sol.tabulacaoResultado(instancia, complementoNomeArq, custo, t_total, custoMelhorSol, solOtimaMelhorSol, gap, rotas)
 
   if imagem == 'comImg':
-    dt.plotDataset(coordenadas, instancia, rotulo)
-    sol.plotSolucao(coordenadas, rotas, instancia + complementoNomeArq, rotulo)
-    sol.plotSolucao(coordenadas, rotasMelhorSol, instancia + '_melhor', rotulo)
+    dt.plotDataset(coordenadas, instancia, rotulo, demandas)
+    sol.plotSolucao(coordenadas, rotas, custo, instancia + complementoNomeArq, rotulo, demandas)
+    sol.plotSolucao(coordenadas, rotasMelhorSol, custoMelhorSol, instancia + '_melhor', rotulo, demandas)
     
 ''' Chamada da função main()
   Parâmetros: [1]nomeInstancia, [2]metodoConstrucao, [3]realizarRefinamento, [4]gerarImagens, [5]gerarRotuloImagens'''
