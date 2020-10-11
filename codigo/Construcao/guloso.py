@@ -6,7 +6,7 @@ import sys
              demandas = lista de demandas dos nós, id do nó = índice da lista
              distancias = {id: [ distancias ]} dicionario com as listas das distancias entre os pontos
     Saida: rotas = {id_rota: [ clientes ]} dicionário com as listas de clientes das rotas '''
-def heristicaGulosa(qtdeNos, capacVeiculo, demandas, distancias):
+def heristicaGulosas(qtdeNos, capacVeiculo, demandas, distancias):
 
   rotas = {}
   visitados = [0] * qtdeNos
@@ -33,8 +33,11 @@ def heristicaGulosa(qtdeNos, capacVeiculo, demandas, distancias):
     menorDistancia = sys.maxsize
 
     for i in range(1, qtdeNos):
-      if visitados[i] == 0 and distancias[localAtual][i] < menorDistancia and demandaRota + demandas[i] <= capacVeiculo and (demandaRota == 0 or distancias[0][rotas[numRota][0]]):
+      if visitados[i] == 0 and distancias[localAtual][i] < menorDistancia:
           proximoLocal = i
           menorDistancia = distancias[localAtual][i]
+    
+    if demandaRota + demandas[proximoLocal] > capacVeiculo:
+      proximoLocal = 0
 
   return rotas
