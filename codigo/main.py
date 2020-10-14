@@ -10,41 +10,46 @@ from Calculo import calculo as calc
     Entrada: instancia = nome da instância (sem extensão)
              metodoConstrucao = indicador de qual heuristica contrutiva sera executada ('gul' ou 'ale')
              refinamento = indicador se o algortmo deve realizar metodo refinamento da solucao ('comRef' ou 'semRef')
-             imagem = indicador se deve ser gerada as imagens da instância plotadas ('comImg'  ou 'semImg')
+             imagem = indicador se deve ser gerada as imagens da instância plotadas ('comImg' ou 'semImg')
              rotulo = indicador de qual rótulo de ser adicionado a imagem da instância ('id', 'dem' ou 'semRot') '''
 def main(instancia, metodoConstrucao, refinamento, imagem, rotulo):
 
   # Entrada de dados
   (qtdeNos, capacVeiculo, coordenadas, demandas) = dt.leituraDataset(instancia)
-  (custoMelhorSol, solOtimaMelhorSol, qtdeRotasMelhorSol, rotasMelhorSol) = sol.leituraMelhorSolucao(instancia)
-  
+  (custoMelhorSol, solOtimaMelhorSol, rotaMelhorSol) = sol.leituraMelhorSolucao(instancia)
+
   # Preprocessamento
   distancias = pre.geraDicionarioDistancia(coordenadas)
 
   t_inicio = time()
 
   # Heristica construtiva
-  rotas = con.heristicaConstrutiva(metodoConstrucao, qtdeNos, capacVeiculo, demandas, distancias)
-
+  rota = con.heuristicaConstrutiva(metodoConstrucao, qtdeNos, capacVeiculo, demandas, distancias)
+  
   # Heuristica de refinamento
   if refinamento == 'comRef':
-    rotas = ref.heuristicaRefinamento(qtdeNos, capacVeiculo, demandas, distancias, rotas)
+    rota = ref.heuristicaRefinamento(capacVeiculo, demandas, distancias, rota)
+  
+  custo = calc.funcaoObjetivo(rota, distancias)
 
   t_total = time() - t_inicio
-
-  custo = calc.funcaoObjetivo(rotas, distancias)
+ 
   gap = calc.gap(custo, custoMelhorSol)
 
   # Salvar dados em arquivo
+  
+  rota = calc.converteRotaEmDicionario(rota)
+
   complementoNomeArq = '_' + metodoConstrucao + '_' + refinamento
-  sol.saveSolucao(custo, t_total, rotasMelhorSol, instancia + complementoNomeArq)
-  sol.tabulacaoResultado(instancia, complementoNomeArq, custo, t_total, custoMelhorSol, solOtimaMelhorSol, gap, rotas)
+  sol.saveSolucao(custo, t_total, rota, instancia + complementoNomeArq)
+  sol.tabulacaoResultado(instancia, complementoNomeArq, custo, t_total, custoMelhorSol, solOtimaMelhorSol, gap, rota)
 
   if imagem == 'comImg':
     dt.plotDataset(coordenadas, instancia, rotulo, demandas)
-    sol.plotSolucao(coordenadas, rotas, custo, instancia + complementoNomeArq, rotulo, demandas)
-    sol.plotSolucao(coordenadas, rotasMelhorSol, custoMelhorSol, instancia + '_melhor', rotulo, demandas)
-    
+    sol.plotSolucao(coordenadas, rota, custo, instancia + complementoNomeArq, rotulo, demandas)
+
+  print(f'Custo: {custo}\nTempo: {t_total:.4f}')
+
 ''' Chamada da função main()
   Parâmetros: [1]nomeInstancia, [2]metodoConstrucao, [3]realizarRefinamento, [4]gerarImagens, [5]gerarRotuloImagens'''
 if __name__ == '__main__':

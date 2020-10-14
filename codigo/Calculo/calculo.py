@@ -8,22 +8,17 @@ def distanciaPontos(pontoA, pontoB):
   distancia = int(round(sqrt((pontoB[0] - pontoA[0]) ** 2 + (pontoB[1] - pontoA[1]) ** 2)))
   return distancia
 
-
 ''' Função que calcula o somatório das distâncias de todas as rotas
-    Entrada: rotas = {id_rota: [ nós ]} dicionário com as listas de nós das rotas 
+    Entrada: rota = [ nós ] listas com a ordem de visitação de nós nas rotas 
              distancias = {id: [ distancias ]} dicionario com as listas das distancias entre os pontos 
     Saida: custo = somatório das distâncias de todas as rotas'''
-def funcaoObjetivo(rotas, distancias):
+def funcaoObjetivo(rota, distancias):
 
   custo = 0
+  k = len(rota)
 
-  for rota in rotas.values():
-    k = len(rota)
-    for i in range(k-1):
-      custo += distancias[rota[i]][rota[i+1]]
-
-    custo += distancias[0][rota[0]]
-    custo += distancias[rota[-1]][0]
+  for i in range(k-1):
+    custo += distancias[rota[i]][rota[i+1]]
   
   return custo
 
@@ -35,3 +30,40 @@ def funcaoObjetivo(rotas, distancias):
 def gap(custo, custoMelhorSol):
   gap = (custo - custoMelhorSol) / custoMelhorSol * 100
   return gap
+
+''' Função que verifica se um rota não quebra a restrição de capacidade do veículo
+    Entrada: rota = [ nós ] listas com a ordem de visitação de nós nas rotas 
+             demandas = lista de demandas dos nós, id do nó = índice da lista
+             capacVeiculo = capacidade de carga do veículo
+    Saida: retorna 1 se a solução for válida, ou 0, caso contŕario ''' 
+def verificaSolucaoValida(rota, demandas, capacVeiculo):
+  
+  k = len(rota)
+  demandaRota = 0
+
+  for i in range(k-1):
+    if demandaRota > capacVeiculo:
+        return 0
+    if rota[i] == 0:
+      demandaRota = 0
+    else:
+      demandaRota += demandas[rota[i]]
+
+  return 1
+
+''' Função que converte um lista com as rotas em um dicionario de rotas
+    Entrada: rota = [ nós ] listas com a ordem de visitação de nós nas rotas 
+    Saida: rotas = {id_rota: [ clientes ]} dicionário com as listas de clientes de cada rota '''
+def converteRotaEmDicionario(rota):
+  
+  dicionario = {}
+  numRota = 0
+
+  for no in rota[:-1]:
+    if no == 0:
+      numRota += 1
+      dicionario[numRota] = []
+    else:
+      dicionario[numRota].append(no)
+  
+  return dicionario
