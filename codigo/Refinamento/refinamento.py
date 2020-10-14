@@ -112,8 +112,14 @@ def heuristicaRefinamento(capacVeiculo, demandas, distancias, rota):
     print('Limite de iterações ultrapssado.')
 
   # Verifica se houve redução no nº de rotas
-  for i in range(0, len(rota)-1):
-    if rota[i] == 0 and rota[i+1] == 0:
-      del rota[i]
+  reduz = True
+  while reduz == True:
+    reduz = False
+    for i in range(0, len(rota)-1):
+      if rota[i] == 0 and rota[i+1] == 0:
+        print(f'{i} {i+1}')
+        del rota[i]
+        reduz = True
+        break
 
   return rota
