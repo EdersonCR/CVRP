@@ -6,7 +6,6 @@ from EntradaSaida import CAMINHO_MELHOR_SOLUCAO, EXTENSAO_SOLUCAO, TAMANHO_PONTO
     Entrada: nome = nome a instância
     Saida: custo = custo total da solução (distância)
            solOtima = Indicador se é a solução ótima ou não
-           qtdeRotas = quantidade de rotas da solução
            rotas = {id_rota: [ nós ]} dicionário com as listas de nós das rotas '''
 def leituraMelhorSolucao(nome):
 
@@ -24,7 +23,7 @@ def leituraMelhorSolucao(nome):
     qtdeRotas += 1
     rotas[qtdeRotas] = [int(dado) for dado in linha.split() if dado.isdigit()]
 
-  return (custo, solOtima, qtdeRotas, rotas)
+  return (custo, solOtima, rotas)
 
 
 ''' Função que salva imagem com os clientes, o deposito e as rotas plotados em um gráfico 
@@ -55,6 +54,8 @@ def plotSolucao(coordenadas, rotas, custo, nome, tipoRotulo, demandas, pesos = [
     
   # Plota o ponto do depósito
   plt.scatter(coordenadas[0][0], coordenadas[0][1], s = TAMANHO_PONTO, color = COR_BORDA, facecolor = COR_DEPOSITO, marker = '.', linewidths = TAMANHO_BORDA_PONTO, zorder = 2)
+
+  rotulo = []
 
   if tipoRotulo == 'dem':
     rotulo = [str(d) for d in demandas]

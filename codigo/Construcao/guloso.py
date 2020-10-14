@@ -5,14 +5,12 @@ import sys
              capacVeiculo = capacidade de carga do veículo
              demandas = lista de demandas dos nós, id do nó = índice da lista
              distancias = {id: [ distancias ]} dicionario com as listas das distancias entre os pontos
-    Saida: rotas = {id_rota: [ clientes ]} dicionário com as listas de clientes das rotas '''
-def heristicaGulosas(qtdeNos, capacVeiculo, demandas, distancias):
+    Saida: rota = [ nós ] listas com a ordem de visitação de nós nas rotas '''
+def heuristicaGulosa(qtdeNos, capacVeiculo, demandas, distancias):
 
-  rotas = {}
+  rota = []
   visitados = [0] * qtdeNos
-  visitados[0] = 1
 
-  numRota = 0
   proximoLocal = 0
   demandaRota = 0
 
@@ -20,14 +18,9 @@ def heristicaGulosas(qtdeNos, capacVeiculo, demandas, distancias):
 
     localAtual = proximoLocal
     
-    if proximoLocal == 0:
-      numRota += 1
-      demandaRota = 0
-      rotas[numRota] = []
-    else:
-      rotas[numRota].append(proximoLocal)
-      visitados[proximoLocal] = 1
-      demandaRota += demandas[proximoLocal]
+    rota.append(proximoLocal)
+    visitados[proximoLocal] = 1
+    demandaRota += demandas[proximoLocal]
 
     proximoLocal = 0
     menorDistancia = sys.maxsize
@@ -39,5 +32,8 @@ def heristicaGulosas(qtdeNos, capacVeiculo, demandas, distancias):
     
     if demandaRota + demandas[proximoLocal] > capacVeiculo:
       proximoLocal = 0
+      demandaRota = 0
 
-  return rotas
+  rota.append(0)
+
+  return rota

@@ -44,6 +44,7 @@ def plotDataset(coordenadas, nome, tipoRotulo, demandas,  pesos = []):
   plt.scatter(x[1:], y[1:], s = pesos, label = TXT_CLIENTE, color = COR_BORDA, facecolor= COR_CLIENTE, marker = '.', linewidths = TAMANHO_BORDA_PONTO)
   plt.scatter(x[0], y[0], s = TAMANHO_PONTO, label = TXT_DEPOSITO, color = COR_BORDA, facecolor = COR_DEPOSITO, marker = '.', linewidths = TAMANHO_BORDA_PONTO)
 
+  rotulo = []
   if tipoRotulo == 'dem':
     rotulo = [str(d) for d in demandas]
   elif tipoRotulo == 'id':

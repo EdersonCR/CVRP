@@ -5,8 +5,8 @@ from Construcao import SEMENTE
     Entrada: qtdeNos = quantidade de nós (clientes + depósito)
              capacVeiculo = capacidade de carga do veículo
              demandas = lista de demandas dos nós, id do nó = índice da lista
-    Saida: rotas = {id_rota: [ clientes ]} dicionário com as listas de clientes das rotas '''
-def heristicaAleatoria(qtdeNos, capacVeiculo, demandas):
+    Saida: rota = [ nós ] listas com a ordem de visitação de nós nas rotas '''
+def heuristicaAleatoria(qtdeNos, capacVeiculo, demandas):
 
   seed(SEMENTE)
 
@@ -14,18 +14,18 @@ def heristicaAleatoria(qtdeNos, capacVeiculo, demandas):
   clientes = sample(clientes, len(clientes))
 
   demandaRota = 0
-  numRota = 1
-  rotas = {}
-  rotas[numRota] = []
+  rota = [0]
 
   for cliente in clientes:
     
     if demandaRota + demandas[cliente] <= capacVeiculo:
-      rotas[numRota].append(cliente)
       demandaRota += demandas[cliente]
     else:
-      numRota += 1
-      rotas[numRota] = [cliente]
+      rota.append(0)
       demandaRota = demandas[cliente]
+
+    rota.append(cliente)
+
+  rota.append(0)
   
-  return rotas
+  return rota

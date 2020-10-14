@@ -5,13 +5,15 @@ from Construcao import (guloso as gul, aleatorio as ale)
              capacVeiculo = capacidade de carga do veículo
              demandas = lista de demandas dos nós, id do nó = índice da lista
              distancias = {id: [ distancias ]} dicionario com as listas das distancias entre os pontos
-    Saida: rotas = {id_rota: [ clientes ]} dicionário com as listas de clientes das rotas '''
-def heristicaConstrutiva(heuristica, qtdeNos, capacVeiculo, demandas, distancias):
+    Saida: rota = [ nós ] listas com a ordem de visitação de nós nas rotas '''
+def heuristicaConstrutiva(heuristica, qtdeNos, capacVeiculo, demandas, distancias):
+
+  rota = []
 
   if heuristica == 'gul':
-    rotas = gul.heristicaGulosa(qtdeNos, capacVeiculo, demandas, distancias)
+    rota = gul.heuristicaGulosa(qtdeNos, capacVeiculo, demandas, distancias)
 
   elif heuristica == 'ale':
-    rotas = ale.heristicaAleatoria(qtdeNos, capacVeiculo, demandas)
+    rota = ale.heuristicaAleatoria(qtdeNos, capacVeiculo, demandas)
 
-  return rotas
+  return rota
