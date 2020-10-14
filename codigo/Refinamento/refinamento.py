@@ -39,13 +39,12 @@ def heuristicaRefinamento(capacVeiculo, demandas, distancias, rota):
   iteracaoMax = ITERACAO_MAX
   iteracao = 0
   troca = True
-  t = True
   ordem = 0
   custoRota = calc.funcaoObjetivo(rota, distancias)
   novaRota = []
 
   # Enquanto encontrar uma solução melhor e não atingir o limite máximo de iterações
-  while troca == True and t == True and iteracao <= iteracaoMax:
+  while troca == True:
     
     troca = False
 
@@ -67,7 +66,11 @@ def heuristicaRefinamento(capacVeiculo, demandas, distancias, rota):
         for k in range(j + passo, fim + passo + passo, passo):
           
           novaRota = troca3elem(novaRota, i, j, k)
+          iteracao += 1
 
+          if iteracao <= iteracaoMax:
+            break
+      
           # Verifica se a solução vizinha é válida
           if calc.verificaSolucaoValida(novaRota, demandas, capacVeiculo) == 1:
             custoNovaRota = calc.funcaoObjetivo(novaRota, distancias)
@@ -77,6 +80,14 @@ def heuristicaRefinamento(capacVeiculo, demandas, distancias, rota):
               rota = novaRota.copy()
               custoRota = custoNovaRota
               troca = True
+              break
+
+        else:
+          continue
+        break
+      else:
+        continue
+      break
 
     # Alterar a ordem de exploração a cada passo
     if ordem == 0:
@@ -95,9 +106,12 @@ def heuristicaRefinamento(capacVeiculo, demandas, distancias, rota):
     for i in range(inicio, fim, passo):
       for j in range(i + passo, fim + passo, passo):
           
-        novaRota = troca2elem(novaRota, i, j)
         iteracao += 1
+        novaRota = troca2elem(novaRota, i, j)
 
+        if iteracao > iteracaoMax:
+          break
+      
         # Verifica se a solução vizinha é válida
         if calc.verificaSolucaoValida(novaRota, demandas, capacVeiculo) == 1:
           custoNovaRota = calc.funcaoObjetivo(novaRota, distancias)
@@ -107,7 +121,12 @@ def heuristicaRefinamento(capacVeiculo, demandas, distancias, rota):
             rota = novaRota.copy()
             custoRota = custoNovaRota
             troca = True
+            break
   
+      else:
+        continue
+      break
+
   if iteracao > iteracaoMax:
     print('Limite de iterações ultrapssado.')
 
