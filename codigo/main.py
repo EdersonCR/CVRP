@@ -47,6 +47,7 @@ def main(instancia, metodoConstrucao, refinamento, imagem, rotulo):
   if imagem == 'comImg':
     dt.plotDataset(coordenadas, instancia, rotulo, demandas)
     sol.plotSolucao(coordenadas, rota, custo, instancia + complementoNomeArq, rotulo, demandas)
+    sol.plotSolucao(coordenadas, rotaMelhorSol, custoMelhorSol, instancia + '_melhor', rotulo, demandas)
 
   print(f'Custo: {custo}\nTempo: {t_total:.4f}')
 
