@@ -53,17 +53,19 @@ def verificaSolucaoValida(rota, demandas, capacVeiculo):
 
 ''' Função que converte um lista com as rotas em um dicionario de rotas
     Entrada: rota = [ nós ] listas com a ordem de visitação de nós nas rotas 
-    Saida: rotas = {id_rota: [ clientes ]} dicionário com as listas de clientes de cada rota '''
+    Saida: dicionario = {id_rota: [ clientes ]} dicionário com as listas de clientes de cada rota '''
 def converteRotaEmDicionario(rota):
   
   dicionario = {}
   numRota = 0
-
-  for no in rota[:-1]:
-    if no == 0:
+  n = len(rota) - 1
+  
+  for i in range(0, n):
+    if rota[i] == 0:
       numRota += 1
       dicionario[numRota] = []
     else:
-      dicionario[numRota].append(no)
+      dicionario[numRota].append(rota[i])
   
   return dicionario
+  

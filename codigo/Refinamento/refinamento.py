@@ -136,7 +136,6 @@ def heuristicaRefinamento(capacVeiculo, demandas, distancias, rota):
     reduz = False
     for i in range(0, len(rota)-1):
       if rota[i] == 0 and rota[i+1] == 0:
-        print(f'{i} {i+1}')
         del rota[i]
         reduz = True
         break
