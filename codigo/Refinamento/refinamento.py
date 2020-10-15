@@ -68,7 +68,7 @@ def heuristicaRefinamento(capacVeiculo, demandas, distancias, rota):
           novaRota = troca3elem(novaRota, i, j, k)
           iteracao += 1
 
-          if iteracao <= iteracaoMax:
+          if iteracao > iteracaoMax:
             break
       
           # Verifica se a solução vizinha é válida
@@ -82,12 +82,11 @@ def heuristicaRefinamento(capacVeiculo, demandas, distancias, rota):
               troca = True
               break
 
-        else:
-          continue
+        if iteracao > iteracaoMax:
+          break
+
+      if iteracao > iteracaoMax:
         break
-      else:
-        continue
-      break
 
     # Alterar a ordem de exploração a cada passo
     if ordem == 0:
@@ -123,9 +122,8 @@ def heuristicaRefinamento(capacVeiculo, demandas, distancias, rota):
             troca = True
             break
   
-      else:
-        continue
-      break
+      if iteracao > iteracaoMax:
+        break
 
   if iteracao > iteracaoMax:
     print('Limite de iterações ultrapssado.')
