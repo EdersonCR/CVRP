@@ -43,8 +43,9 @@ def main(instancia, metodoConstrucao, refinamento, imagem, rotulo):
     sol.plotSolucao(coordenadas, rota, custo, instancia + complementoNomeArq, rotulo, demandas)
     sol.plotSolucao(coordenadas, rotaMelhorSol, custoMelhorSol, instancia + '_melhor', rotulo, demandas)
     sol.saveSolucao(custo, t_total, rota, instancia + complementoNomeArq)
-    
+  
   sol.printResultadoExecução(custo, t_total)
+
 
 ''' Chamada da função main()
   Parâmetros: [1]nomeInstancia, [2]metodoConstrucao, [3]realizarRefinamento, [4]gerarImagens, [5]gerarRotuloImagens'''

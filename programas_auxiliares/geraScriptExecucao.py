@@ -2,7 +2,7 @@ import sys
 import os
 import platform
 
-CAMINHO_MAIN = '../codigo/'
+CAMINHO_MAIN = '../src/'
 CAMINHO_DATASETS = '../dados/datasets'
 
 ''' Função que gera um arquivo .bat de execução dos datasets
