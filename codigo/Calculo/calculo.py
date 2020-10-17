@@ -36,36 +36,50 @@ def gap(custo, custoMelhorSol):
              demandas = lista de demandas dos nós, id do nó = índice da lista
              capacVeiculo = capacidade de carga do veículo
     Saida: retorna 1 se a solução for válida, ou 0, caso contŕario ''' 
-def verificaSolucaoValida(rota, demandas, capacVeiculo):
-  
-  k = len(rota)
+def verificaRestricaoCapacidade(rota, demandas, capacVeiculo):
+
   demandaRota = 0
 
-  for i in range(k-1):
+  for no in rota:
     if demandaRota > capacVeiculo:
         return 0
-    if rota[i] == 0:
+    if no == 0:
       demandaRota = 0
     else:
-      demandaRota += demandas[rota[i]]
+      demandaRota += demandas[no]
 
   return 1
 
-''' Função que converte um lista com as rotas em um dicionario de rotas
+''' Função que verifica e corrige a lista de rotas se houve redução no numero de rotas
+    Entrada: rota = [ nós ] listas com a ordem de visitação de nós nas rotas 
+    Saida: rota = [ nós ] listas com a ordem de visitação de nós nas rotas reorganizada '''
+def verificaReducaoRotas(rota):
+  
+  reduz = True
+  while reduz == True:
+    reduz = False
+    for i in range(0, len(rota)-1):
+      if rota[i] == 0 and rota[i+1] == 0:
+        del rota[i]
+        reduz = True
+        break
+  
+  return rota
+
+
+  ''' Função que converte um lista com as rotas em um dicionario de rotas
     Entrada: rota = [ nós ] listas com a ordem de visitação de nós nas rotas 
     Saida: dicionario = {id_rota: [ clientes ]} dicionário com as listas de clientes de cada rota '''
 def converteRotaEmDicionario(rota):
   
   dicionario = {}
   numRota = 0
-  n = len(rota) - 1
   
-  for i in range(0, n):
-    if rota[i] == 0:
+  for no in rota[:-1]:
+    if no == 0:
       numRota += 1
       dicionario[numRota] = []
     else:
-      dicionario[numRota].append(rota[i])
+      dicionario[numRota].append(no)
   
   return dicionario
-  
