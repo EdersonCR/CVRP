@@ -5,8 +5,9 @@ from Construcao import (guloso as gul, aleatorio as ale)
              capacVeiculo = capacidade de carga do veículo
              demandas = lista de demandas dos nós, id do nó = índice da lista
              distancias = {id: [ distancias ]} dicionario com as listas das distancias entre os pontos
+             semente = valor incial passado para gerador de numeros pseudoaletório
     Saida: rota = [ nós ] listas com a ordem de visitação de nós nas rotas '''
-def heuristicaConstrutiva(heuristica, qtdeNos, capacVeiculo, demandas, distancias):
+def heuristicaConstrutiva(heuristica, qtdeNos, capacVeiculo, demandas, distancias, semente):
 
   rota = []
 
@@ -14,6 +15,6 @@ def heuristicaConstrutiva(heuristica, qtdeNos, capacVeiculo, demandas, distancia
     rota = gul.heuristicaGulosa(qtdeNos, capacVeiculo, demandas, distancias)
 
   elif heuristica == 'ale':
-    rota = ale.heuristicaAleatoria(qtdeNos, capacVeiculo, demandas)
+    rota = ale.heuristicaAleatoria(qtdeNos, capacVeiculo, demandas, semente)
 
   return rota
