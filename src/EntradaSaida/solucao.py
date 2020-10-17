@@ -2,6 +2,8 @@ import pandas as pd
 from matplotlib import pyplot as plt
 from EntradaSaida import CAMINHO_MELHOR_SOLUCAO, EXTENSAO_SOLUCAO, TAMANHO_PONTO, PROPORCAO_PONTO, POSICAO_ROTULO, POSICAO_ROTULO, TAMANHO_ROTULO, TAM_FONTE_LEGENDA, CAMINHO_VISUALIZACAO, DPI, TAMANHO_LINHA_ROTA, TAMANHO_BORDA_PONTO, LIMITE_PLOT_CAMINHO_DEPOSITO, CAMINHO_SOLUCAO, EXTENSAO_TABELA, CAMINHO_TABELA, TXT_TABELA, COR_DEPOSITO, COR_BORDA
 
+from Calculo import calculo as calc
+
 ''' Função que faz a leitura dos dados de arquivo que contém a melhor solução
     Entrada: nome = nome a instância
     Saida: custo = custo total da solução (distância)
@@ -31,11 +33,13 @@ def leituraMelhorSolucao(nome):
              rotas = {id_rota: [ nós ]} dicionário com as listas de nós das rotas
              custo = custo total (distância) da solução
              nome = nome do arquivo e titulo
-             tipoRotulo = indicador de qual rótulo de ser adicionado a imagem da instância ('id', 'dem' ou 'semRot')
+             tipoRotulo = indicador de qual rótulo de ser adicionado a imagem da instância ('id', 'dem', 'dist' ou 'semRot')
              demandas = [] lista de demandas dos nós, id do nó = índice da lista
              pesos = lista coms os pesos (demandas) de cada ponto (assume lista vazia se não passado como argumento) '''
 def plotSolucao(coordenadas, rotas, custo, nome, tipoRotulo, demandas, pesos = []):
   
+  plt.axis('equal')
+
   for rota in rotas:
     x = [coordenadas[no][0] for no in rotas[rota]]
     y = [coordenadas[no][1] for no in rotas[rota]]
@@ -51,26 +55,54 @@ def plotSolucao(coordenadas, rotas, custo, nome, tipoRotulo, demandas, pesos = [
     # Plota os clientes e as linhas das rotas
     plt.plot(x, y, label = f'Rota {rota!s}', color = cor, linewidth = TAMANHO_LINHA_ROTA, zorder = 1)
     plt.scatter(x, y, s = p, color = COR_BORDA, facecolor = cor, marker = '.', linewidths = TAMANHO_BORDA_PONTO, zorder = 2)
-    
+
+
   # Plota o ponto do depósito
   plt.scatter(coordenadas[0][0], coordenadas[0][1], s = TAMANHO_PONTO, color = COR_BORDA, facecolor = COR_DEPOSITO, marker = '.', linewidths = TAMANHO_BORDA_PONTO, zorder = 2)
 
-  rotulo = []
+  rotuloNo = []
 
-  if tipoRotulo == 'dem':
-    rotulo = [str(d) for d in demandas]
-  elif tipoRotulo == 'id':
-    rotulo = [str(i) for i, d in enumerate(demandas)]
+  if 'dem' in tipoRotulo and 'id' in tipoRotulo:
+    rotuloNo = [f'{i} ({d})' for i, d in enumerate(demandas)]
+  elif 'dem' in tipoRotulo:
+    rotuloNo = [f'({d})' for d in demandas]
+  elif 'id' in tipoRotulo:
+    rotuloNo = [f'{i}' for i, d in enumerate(demandas)]
 
-  if tipoRotulo == 'dem' or tipoRotulo == 'id':
+  if 'dem' in tipoRotulo or 'id' in tipoRotulo:
     for no in coordenadas:
-      plt.annotate(rotulo[no], (coordenadas[no][0] + POSICAO_ROTULO, coordenadas[no][1] + POSICAO_ROTULO), fontsize = TAMANHO_ROTULO)
+      plt.annotate(rotuloNo[no], (coordenadas[no][0] + POSICAO_ROTULO, coordenadas[no][1] + POSICAO_ROTULO), fontsize = TAMANHO_ROTULO)
+
+  if 'dist' in tipoRotulo:
+
+    for rota in rotas.values():
+
+      rotaAux = rota
+      if len(rotas) < LIMITE_PLOT_CAMINHO_DEPOSITO:
+        rotaAux = [0] + rotaAux + [0]
+
+      rotuloCaminho = [f'{calc.distanciaPontos(coordenadas[rotaAux[i]], coordenadas[rotaAux[i+1]])}' for i in range(len(rotaAux)-1)]
+      x = [
+        (max(coordenadas[rotaAux[i]][0],coordenadas[rotaAux[i+1]][0])
+        - min(coordenadas[rotaAux[i]][0],coordenadas[rotaAux[i+1]][0])) / 2
+        + min(coordenadas[rotaAux[i]][0],coordenadas[rotaAux[i+1]][0])
+        for i in range(len(rotaAux)-1)
+      ]
+      y = [
+        (max(coordenadas[rotaAux[i]][1],coordenadas[rotaAux[i+1]][1])
+        - min(coordenadas[rotaAux[i]][1],coordenadas[rotaAux[i+1]][1])) / 2
+        + min(coordenadas[rotaAux[i]][1],coordenadas[rotaAux[i+1]][1])
+        for i in range(len(rotaAux)-1)
+      ]
+
+      for i in range(len(rotuloCaminho)):
+        plt.annotate(rotuloCaminho[i], (x[i], y[i]), fontsize = TAMANHO_ROTULO)
 
   plt.title(nome)
   plt.xlabel(f'Custo: {custo}')
   plt.legend(loc = 'upper left', bbox_to_anchor=(1.01, 1.0125), fontsize = TAM_FONTE_LEGENDA, fancybox = False, edgecolor = 'black')
 
-  plt.savefig(CAMINHO_VISUALIZACAO + nome, dpi=DPI, bbox_inches='tight')
+  plt.savefig(CAMINHO_VISUALIZACAO + nome, dpi=600, bbox_inches='tight')
   plt.clf()
 
 

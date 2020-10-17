@@ -14,7 +14,7 @@ ITERACAO_MAX = 100000
              metodoConstrucao = indicador de qual heuristica contrutiva sera executada ('gul' ou 'ale')
              refinamento = indicador se o algortmo deve realizar metodo refinamento da solucao ('comRef' ou 'semRef')
              imagem = indicador se deve ser gerada as imagens da instância plotadas ('comImg' ou 'semImg')
-             rotulo = indicador de qual rótulo de ser adicionado a imagem da instância ('id', 'dem' ou 'semRot') '''
+             rotulo = indicador de qual rótulo de ser adicionado a imagem da instância ('id', 'dem', 'dist' ou 'semRot') '''
 def main(instancia, metodoConstrucao, refinamento, imagem, rotulo):
   
   (qtdeNos, capacVeiculo, coordenadas, demandas) = dt.leituraDataset(instancia)

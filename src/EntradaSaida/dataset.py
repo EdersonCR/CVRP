@@ -41,18 +41,23 @@ def plotDataset(coordenadas, nome, tipoRotulo, demandas,  pesos = []):
   x = [no[0] for no in coordenadas.values()]
   y = [no[1] for no in coordenadas.values()]
 
+  plt.axis('equal')
+
   plt.scatter(x[1:], y[1:], s = pesos, label = TXT_CLIENTE, color = COR_BORDA, facecolor= COR_CLIENTE, marker = '.', linewidths = TAMANHO_BORDA_PONTO)
   plt.scatter(x[0], y[0], s = TAMANHO_PONTO, label = TXT_DEPOSITO, color = COR_BORDA, facecolor = COR_DEPOSITO, marker = '.', linewidths = TAMANHO_BORDA_PONTO)
 
-  rotulo = []
-  if tipoRotulo == 'dem':
-    rotulo = [str(d) for d in demandas]
-  elif tipoRotulo == 'id':
-    rotulo = [str(i) for i, d in enumerate(demandas)]
+  rotuloNo = []
 
-  if tipoRotulo == 'dem' or tipoRotulo == 'id':
+  if 'dem' in tipoRotulo and 'id' in tipoRotulo:
+    rotuloNo = [f'{i} ({d})' for i, d in enumerate(demandas)]
+  elif 'dem' in tipoRotulo:
+    rotuloNo = [f'({d})' for d in demandas]
+  elif 'id' in tipoRotulo:
+    rotuloNo = [f'{i}' for i, d in enumerate(demandas)]
+
+  if 'dem' in tipoRotulo or 'id' in tipoRotulo:
     for no in coordenadas:
-      plt.annotate(rotulo[no], (coordenadas[no][0] + POSICAO_ROTULO, coordenadas[no][1] + POSICAO_ROTULO), fontsize = TAMANHO_ROTULO)
+      plt.annotate(rotuloNo[no], (coordenadas[no][0] + POSICAO_ROTULO, coordenadas[no][1] + POSICAO_ROTULO), fontsize = TAMANHO_ROTULO)
   
   plt.title(nome)
   plt.legend(loc = 'upper left', bbox_to_anchor=(1.01, 1.0125), fontsize = TAM_FONTE_LEGENDA, fancybox = False, edgecolor = 'black')
