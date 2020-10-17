@@ -86,6 +86,14 @@ def printSolucao(custo, tempo, rotas):
     print(f'Rota #{rota!s}: ' + ' '.join(str(no) for no in rotas[rota]))
 
 
+''' Função que imprime resultado resumido da execução
+    Entrada: custo = custo total (distância) da solução
+             tempo = tempo gasto para calcular a solução '''
+def printResultadoExecução(custo, tempo):
+  print(f'Sol: {custo!s}')
+  print(f'Tempo: {tempo:.4f}')
+
+
 ''' Função que salva em um arquivo os dados de uma solução calculada
     Entrada: custo = custo total (distância) da solução
              tempo = tempo gasto para calcular a solução
@@ -107,25 +115,27 @@ def saveSolucao(custo, tempo, rotas, nome):
 
 ''' Função que salva e agrega o resultado de uma solução em uma tabela em um arquivo
     Entrada: instancia = nome da instância
-             nomeArq = complemento do nome do arquivo em que serão agregados os dados
-             custo = custo total (distância) da solução calculada
-             tempo = tempo gasto para calcuar a solução
+             qtdeNos = quantidade de nós (clientes + depósiro)
              custoMelhorSol = custo da melhor solução disponível
              solOtima = indicador se a melhor solução é ótima ou não
+             custo = custo total (distância) da solução calculada
+             tempo = tempo gasto para calcuar a solução
              gap = valor percentual da distância da solução calculada em relação a melhor solução
-             rotas = {id_rota: [ clientes ]} dicionário com as listas de clientes das rotas da solução calculada'''
-def tabulacaoResultado(instancia, nomeArq, custo, tempo, custoMelhorSol, solOtima, gap, rotas):
+             rotas = {id_rota: [ clientes ]} dicionário com as listas de clientes das rotas da solução calculada 
+             nomeArq = complemento do nome do arquivo em que serão agregados os dados '''
+def tabulacaoResultado(instancia, qtdeNos, custoMelhorSol, solOtima, custo, tempo, gap, rotas, nomeArq):
   
   resultado = pd.DataFrame({
     'Instância': [instancia],
-    'Custo': [custo],
-    'Tempo (s)': [f'{tempo:.4f}'.replace('.',',')],
-    'Melhor Solução': [custoMelhorSol],
-    'Solução Ótima': [solOtima],
-    'Gap (%)': [f'{gap:.2f}'.replace('.', ',')],
+    'n': [qtdeNos - 1],
+    'Melhor Sol.': [custoMelhorSol],
+    'Opt': [solOtima],
+    'Sol.': [custo],
+    'T (s)': [f'{tempo:.2f}'.replace('.',',')],
+    '%gap': [f'{gap:.2f}'.replace('.', ',')],
     'Rotas': [f'{rotas}']
   })
 
   nomeArq = TXT_TABELA + nomeArq
-  resultado.to_csv(CAMINHO_TABELA + nomeArq +  EXTENSAO_TABELA, mode = 'a+', sep = ';', encoding='utf8', index = False, header = False)
+  resultado.to_csv(CAMINHO_TABELA + nomeArq +  EXTENSAO_TABELA, mode = 'a+', sep = ';', encoding='utf8', index = False)
  
