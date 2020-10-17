@@ -90,7 +90,7 @@ def printSolucao(custo, tempo, rotas):
     Entrada: custo = custo total (distância) da solução
              tempo = tempo gasto para calcular a solução '''
 def printResultadoExecução(custo, tempo):
-  print(f'Sol: {custo!s}')
+  print(f'Custo: {custo!s}')
   print(f'Tempo: {tempo:.4f}')
 
 
@@ -108,9 +108,9 @@ def saveSolucao(custo, tempo, rotas, nome):
     string += f'Rota #{rota!s}: ' + ' '.join(str(no) for no in rotas[rota]) + '\n'
 
   nome += EXTENSAO_SOLUCAO
-  arqSaida = open (CAMINHO_SOLUCAO + nome, 'w+')
-  arqSaida.write(string)
-  arqSaida.close()
+  
+  with open(CAMINHO_SOLUCAO + nome, 'w+') as arqSaida:
+    arqSaida.write(string)
 
 
 ''' Função que salva e agrega o resultado de uma solução em uma tabela em um arquivo
@@ -137,5 +137,7 @@ def tabulacaoResultado(instancia, qtdeNos, custoMelhorSol, solOtima, custo, temp
   })
 
   nomeArq = TXT_TABELA + nomeArq
-  resultado.to_csv(CAMINHO_TABELA + nomeArq +  EXTENSAO_TABELA, mode = 'a+', sep = ';', encoding='utf8', index = False)
+
+  with open(CAMINHO_TABELA + nomeArq +  EXTENSAO_TABELA, mode = 'a+') as arqSaida:
+    resultado.to_csv(arqSaida, sep = ';', encoding='utf8', index = False, header = False)
  

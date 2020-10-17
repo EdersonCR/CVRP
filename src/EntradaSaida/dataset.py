@@ -9,21 +9,21 @@ from EntradaSaida import CAMINHO_DATASET, EXTENSAO_DATASET, TAMANHO_PONTO, PROPO
            demandas = lista de demandas dos nós, id do nó = índice da lista '''
 def leituraDataset(nome):
 
-  arqEntrada = open(CAMINHO_DATASET + nome + EXTENSAO_DATASET, 'r')
+  with open(CAMINHO_DATASET + nome + EXTENSAO_DATASET, 'r') as arqEntrada:
     
-  qtdeNos = int(arqEntrada.readline())
-  capacVeiculo = int(arqEntrada.readline())
-  
-  coordenadas = {}
-  demandas = []
+    qtdeNos = int(arqEntrada.readline())
+    capacVeiculo = int(arqEntrada.readline())
+    
+    coordenadas = {}
+    demandas = []
 
-  for i in range(qtdeNos):
-      infoNo = [float(dado) for dado in arqEntrada.readline().split()]
-      coordenadas[int(infoNo[0])] = (infoNo[1], infoNo[2])
+    for i in range(qtdeNos):
+        infoNo = [float(dado) for dado in arqEntrada.readline().split()]
+        coordenadas[int(infoNo[0])] = (infoNo[1], infoNo[2])
 
-  for i in range(qtdeNos):
-      infoNo = [int(dado) for dado in arqEntrada.readline().split()]
-      demandas.append(infoNo[1])
+    for i in range(qtdeNos):
+        infoNo = [int(dado) for dado in arqEntrada.readline().split()]
+        demandas.append(infoNo[1])
 
   return (qtdeNos, capacVeiculo, coordenadas, demandas)
 

@@ -46,7 +46,6 @@ def main(instancia, metodoConstrucao, refinamento, imagem, rotulo):
   
   sol.printResultadoExecução(custo, t_total)
 
-
 ''' Chamada da função main()
   Parâmetros: [1]nomeInstancia, [2]metodoConstrucao, [3]realizarRefinamento, [4]gerarImagens, [5]gerarRotuloImagens'''
 if __name__ == '__main__':
