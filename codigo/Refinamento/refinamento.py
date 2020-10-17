@@ -1,55 +1,49 @@
 from Calculo import calculo as calc
-from Refinamento import ITERACAO_MAX
 
-''' Função que realiza um troca de dois elementos de uma lista
+''' Função que troca de dois elementos de uma lista e retorna uma nova lista
     Entrada: lista = []
-             i, j = indice dos elementos que serão trocados
-    Saida: lista = [] com elementos trocados '''
+             i, j = indice dos elementos que serão trocados entre si
+    Saida: novaLista = [] nova lista com elementos trocados '''
 def troca2elem(lista, i, j):
-  
-  aux = lista[i]
-  lista[i] = lista[j]
-  lista[j] = aux
 
-  return lista
+  novaLista = lista.copy()
+  novaLista[i] = lista[j]
+  novaLista[j] = lista[i]
+
+  return novaLista
 
 
-''' Função que realiza um troca de três elementos de uma lista
+''' Função que troca de três elementos de uma lista e retorna uma nova lista
     Entrada: lista = []
-             i, j, k = indice dos elementos que serão trocados entre si (i <- k, j <- i, k <- j)
-    Saida: lista = [] com elementos trocados '''
+             i, j, k = indice dos elementos que serão trocados entre si
+    Saida: novaLista = [] nova lista com elementos trocados '''
 def troca3elem(lista, i, j, k):
   
-  aux1 = lista[i]
-  aux2 = lista[j]
-  lista[i] = lista[k]
-  lista[j] = aux1
-  lista[k] = aux2
+  novaLista = lista.copy()
+  novaLista[i] = lista[k]
+  novaLista[j] = lista[i]
+  novaLista[k] = lista[j]
 
-  return lista
+  return novaLista
 
 
-''' Função que executa uma heuristica first improvement 2-opt para refinar uma solução para CVRP
+''' Função que executa uma heuristica first improvement para refinar uma solução para CVRP
     Entrada: capacVeiculo = capacidade de carga do veículo
-             demandas = lista de demandas dos nós, id do nó = índice da lista
+             demandas = lista de demandas dos nós
              distancias = {id: [ distancias ]} dicionario com as listas das distancias entre os pontos
+             iteracaoMax = limite máximo de iterações sem melhoria que a heuristica realiza
     Saida: rota = [ nós ] listas de nós a serem percorridos nas rotas '''
-def heuristicaRefinamento(capacVeiculo, demandas, distancias, rota):
-  
-  iteracaoMax = ITERACAO_MAX
+def heuristicaRefinamento(capacVeiculo, demandas, distancias, rota, iteracaoMax):
+
   iteracao = 0
-  troca = True
+  melhoria2elem = melhoria3elem = True
   ordem = 0
   custoRota = calc.funcaoObjetivo(rota, distancias)
   novaRota = []
 
-  # Enquanto encontrar uma solução melhor e não atingir o limite máximo de iterações
-  while troca == True:
+  while melhoria2elem == True or melhoria3elem == True:
     
-    troca = False
-
-    novaRota = rota.copy()
-
+    # Alterar a ordem de exploração a cada passo
     if ordem == 0:
       inicio = 1
       fim = len(rota) - 3
@@ -59,33 +53,33 @@ def heuristicaRefinamento(capacVeiculo, demandas, distancias, rota):
       fim = 2
       passo = -1
 
-    # Percorre os visinhos buscando uma solução melhor
-    # Escolhe o primeiro vizinho que seja melhor que a solução atual
+    melhoria3elem = 0
+
     for i in range(inicio, fim, passo):
       for j in range(i + passo, fim + passo, passo):
         for k in range(j + passo, fim + passo + passo, passo):
           
-          novaRota = troca3elem(novaRota, i, j, k)
-          iteracao += 1
+          novaRota = troca3elem(rota, i, j, k)
 
-          if iteracao > iteracaoMax:
-            break
-      
-          # Verifica se a solução vizinha é válida
-          if calc.verificaSolucaoValida(novaRota, demandas, capacVeiculo) == 1:
-            custoNovaRota = calc.funcaoObjetivo(novaRota, distancias)
+          if calc.verificaRestricaoCapacidade(novaRota, demandas, capacVeiculo) == 1:
             
-            # Se a solução vizinha for melhor, altera a solução para esse vizinho
+            iteracao += 1
+            if iteracao > iteracaoMax:
+              break
+            
+            custoNovaRota = calc.funcaoObjetivo(novaRota, distancias)
+
             if custoNovaRota < custoRota:
               rota = novaRota.copy()
               custoRota = custoNovaRota
-              troca = True
+              melhoria3 = True
+              iteracao = 0
               break
 
-        if iteracao > iteracaoMax:
+        if iteracao > iteracaoMax or melhoria3elem == True:
           break
 
-      if iteracao > iteracaoMax:
+      if iteracao > iteracaoMax or melhoria3elem == True:
         break
 
     # Alterar a ordem de exploração a cada passo
@@ -98,44 +92,39 @@ def heuristicaRefinamento(capacVeiculo, demandas, distancias, rota):
       fim = 1
       ordem = 0
 
-    novaRota = rota.copy()
+    melhoria2elem = 0
 
     # Percorre os visinhos buscando uma solução melhor
     # Escolhe o primeiro vizinho que seja melhor que a solução atual
     for i in range(inicio, fim, passo):
       for j in range(i + passo, fim + passo, passo):
           
-        iteracao += 1
-        novaRota = troca2elem(novaRota, i, j)
+        novaRota = troca2elem(rota, i, j)
 
         if iteracao > iteracaoMax:
           break
       
-        # Verifica se a solução vizinha é válida
-        if calc.verificaSolucaoValida(novaRota, demandas, capacVeiculo) == 1:
+        if calc.verificaRestricaoCapacidade(novaRota, demandas, capacVeiculo) == 1:
+          
+          iteracao += 1
+          if iteracao > iteracaoMax:
+            break
+
           custoNovaRota = calc.funcaoObjetivo(novaRota, distancias)
           
-          # Se a solução vizinha for melhor, altera a solução para esse vizinho
           if custoNovaRota < custoRota:
             rota = novaRota.copy()
             custoRota = custoNovaRota
-            troca = True
+            melhoria2elem = True
+            iteracao = 0
             break
   
-      if iteracao > iteracaoMax:
+      if iteracao > iteracaoMax or melhoria2elem == True:
         break
 
   if iteracao > iteracaoMax:
-    print('Limite de iterações ultrapssado.')
+    print('Limite de iterações sem melhoria ultrapssado.')
 
-  # Verifica se houve redução no nº de rotas
-  reduz = True
-  while reduz == True:
-    reduz = False
-    for i in range(0, len(rota)-1):
-      if rota[i] == 0 and rota[i+1] == 0:
-        del rota[i]
-        reduz = True
-        break
+  rota = calc.verificaReducaoRotas(rota)
 
   return rota
