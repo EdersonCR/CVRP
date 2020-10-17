@@ -3,7 +3,7 @@ from EntradaSaida import CAMINHO_DATASET, EXTENSAO_DATASET, TAMANHO_PONTO, PROPO
 
 ''' Função que faz a leitura dos dados de arquivo de dataset
     Entrada: nome = nome da instância
-    Saida: qtdeNos = N quantidade de nós
+    Saida: qtdeNos = quantidade de nós (clientes + depósiro)
            capacVeiculo = capacidade de carga do veículo
            coordenadas = {id: (x, y)} dicionário com as coordenas x e y dos nós, chave = id do nó
            demandas = lista de demandas dos nós, id do nó = índice da lista '''
