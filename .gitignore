@@ -1,9 +1,7 @@
 .vscode
 
-# Arquivos de execução local Linux
+# Arquivos de execução local
 src/executa*.sh
-
-# Arquivos de execução local Windows
 src/executa*.bat
 
 # Caches dos módulos
@@ -13,5 +11,3 @@ src/*/__pycache__
 resultados/*.*
 resultados/*/*
 !resultados/*/.gitkeep
-
-
