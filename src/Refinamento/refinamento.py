@@ -36,7 +36,8 @@ def troca3elem(lista, i, j, k):
 def heuristicaRefinamento(capacVeiculo, demandas, distancias, rota, iteracaoMax):
 
   iteracao = 0
-  melhoria2elem = melhoria3elem = True
+  melhoria2elem = True
+  melhoria3elem = True
   ordem = 0
   custoRota = calc.funcaoObjetivo(rota, distancias)
   novaRota = []
@@ -53,7 +54,7 @@ def heuristicaRefinamento(capacVeiculo, demandas, distancias, rota, iteracaoMax)
       fim = 2
       passo = -1
 
-    melhoria3elem = 0
+    melhoria3elem = False
 
     for i in range(inicio, fim, passo):
       for j in range(i + passo, fim + passo, passo):
@@ -72,7 +73,7 @@ def heuristicaRefinamento(capacVeiculo, demandas, distancias, rota, iteracaoMax)
             if custoNovaRota < custoRota:
               rota = novaRota.copy()
               custoRota = custoNovaRota
-              melhoria3 = True
+              melhoria3elem = True
               iteracao = 0
               break
 
@@ -92,7 +93,7 @@ def heuristicaRefinamento(capacVeiculo, demandas, distancias, rota, iteracaoMax)
       fim = 1
       ordem = 0
 
-    melhoria2elem = 0
+    melhoria2elem = False
 
     # Percorre os visinhos buscando uma solução melhor
     # Escolhe o primeiro vizinho que seja melhor que a solução atual
@@ -101,9 +102,6 @@ def heuristicaRefinamento(capacVeiculo, demandas, distancias, rota, iteracaoMax)
           
         novaRota = troca2elem(rota, i, j)
 
-        if iteracao > iteracaoMax:
-          break
-      
         if calc.verificaRestricaoCapacidade(novaRota, demandas, capacVeiculo) == 1:
           
           iteracao += 1
