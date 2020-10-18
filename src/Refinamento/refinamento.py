@@ -32,10 +32,12 @@ def troca3elem(lista, i, j, k):
              demandas = lista de demandas dos nós
              distancias = {id: [ distancias ]} dicionario com as listas das distancias entre os pontos
              iteracaoMax = limite máximo de iterações sem melhoria que a heuristica realiza
-    Saida: rota = [ nós ] listas de nós a serem percorridos nas rotas '''
+    Saida: rota = [ nós ] listas de nós a serem percorridos nas rotas
+           paradaLimiteIteracao = indicador se o refinamento parou devido a atingir limite de iterações máximo ou não '''
 def heuristicaRefinamento(capacVeiculo, demandas, distancias, rota, iteracaoMax):
 
   iteracao = 0
+  paradaLimiteIteracao = False
   melhoria2elem = True
   melhoria3elem = True
   ordem = 0
@@ -102,7 +104,7 @@ def heuristicaRefinamento(capacVeiculo, demandas, distancias, rota, iteracaoMax)
           
         novaRota = troca2elem(rota, i, j)
 
-        if calc.verificaRestricaoCapacidade(novaRota, demandas, capacVeiculo) == 1:
+        if calc.verificaRestricaoCapacidade(novaRota, demandas, capacVeiculo) == True:
           
           iteracao += 1
           if iteracao > iteracaoMax:
@@ -121,8 +123,8 @@ def heuristicaRefinamento(capacVeiculo, demandas, distancias, rota, iteracaoMax)
         break
 
   if iteracao > iteracaoMax:
-    print('Limite de iterações sem melhoria ultrapssado.')
+    paradaLimiteIteracao = True
 
   rota = calc.verificaReducaoRotas(rota)
 
-  return rota
+  return (rota, paradaLimiteIteracao)

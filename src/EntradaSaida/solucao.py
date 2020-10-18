@@ -153,9 +153,10 @@ def saveSolucao(custo, tempo, rotas, nome):
              custo = custo total (distância) da solução calculada
              tempo = tempo gasto para calcuar a solução
              gap = valor percentual da distância da solução calculada em relação a melhor solução
+             paradaLimiteIteracao = indicador se o refinamento parou devido a atingir limite de iterações máximo ou não
              rotas = {id_rota: [ clientes ]} dicionário com as listas de clientes das rotas da solução calculada 
              nomeArq = complemento do nome do arquivo em que serão agregados os dados '''
-def tabulacaoResultado(instancia, qtdeNos, custoMelhorSol, solOtima, custo, tempo, gap, rotas, nomeArq):
+def tabulacaoResultado(instancia, qtdeNos, custoMelhorSol, solOtima, custo, tempo, gap, paradaLimiteIteracao, rotas, nomeArq):
   
   resultado = pd.DataFrame({
     'Instância': [instancia],
@@ -165,6 +166,7 @@ def tabulacaoResultado(instancia, qtdeNos, custoMelhorSol, solOtima, custo, temp
     'Sol.': [custo],
     'T (s)': [f'{tempo:.2f}'.replace('.',',')],
     '%gap': [f'{gap:.2f}'.replace('.', ',')],
+    'Lim. Iter.': ['*' if paradaLimiteIteracao == True else ''],
     'Rotas': [f'{rotas}']
   })
 

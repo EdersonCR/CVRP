@@ -35,20 +35,22 @@ def gap(custo, custoMelhorSol):
     Entrada: rota = [ nós ] listas com a ordem de visitação de nós nas rotas 
              demandas = lista de demandas dos nós, id do nó = índice da lista
              capacVeiculo = capacidade de carga do veículo
-    Saida: retorna 1 se a solução for válida, ou 0, caso contŕario ''' 
+    Saida: retorna True se a solução for válida, ou False, caso contŕario ''' 
 def verificaRestricaoCapacidade(rota, demandas, capacVeiculo):
 
   demandaRota = 0
 
   for no in rota:
+    
     if demandaRota > capacVeiculo:
-        return 0
+        return False
+
     if no == 0:
       demandaRota = 0
     else:
       demandaRota += demandas[no]
 
-  return 1
+  return True
 
 ''' Função que verifica e corrige a lista de rotas se houve redução no numero de rotas
     Entrada: rota = [ nós ] listas com a ordem de visitação de nós nas rotas 

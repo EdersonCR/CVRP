@@ -22,12 +22,14 @@ def main(instancia, metodoConstrucao, refinamento, imagem, rotulo):
 
   distancias = pre.geraDicionarioDistancia(coordenadas)
 
+  paradaLimiteIteracao = False
+
   t_inicio = time()
 
   rota = con.heuristicaConstrutiva(metodoConstrucao, qtdeNos, capacVeiculo, demandas, distancias, SEMENTE)
   
   if refinamento == 'comRef':
-    rota = ref.heuristicaRefinamento(capacVeiculo, demandas, distancias, rota, ITERACAO_MAX)
+    rota, paradaLimiteIteracao = ref.heuristicaRefinamento(capacVeiculo, demandas, distancias, rota, ITERACAO_MAX)
 
   t_total = time() - t_inicio
 
@@ -36,7 +38,7 @@ def main(instancia, metodoConstrucao, refinamento, imagem, rotulo):
 
   complementoNomeArq = '_' + metodoConstrucao + '_' + refinamento
   rota = calc.converteRotaEmDicionario(rota)
-  sol.tabulacaoResultado(instancia, qtdeNos, custoMelhorSol, solOtimaMelhorSol, custo, t_total, gap, rota, complementoNomeArq)
+  sol.tabulacaoResultado(instancia, qtdeNos, custoMelhorSol, solOtimaMelhorSol, custo, t_total, gap, paradaLimiteIteracao, rota, complementoNomeArq)
 
   if imagem == 'comImg':
     dt.plotDataset(coordenadas, instancia, rotulo, demandas)
