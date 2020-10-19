@@ -8,6 +8,5 @@ src/executa*.bat
 src/*/__pycache__
 
 # Resultados de execução
-resultados/*.*
 resultados/*/*
 !resultados/*/.gitkeep
