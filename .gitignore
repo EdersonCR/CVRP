@@ -8,5 +8,9 @@ src/executa*.bat
 src/*/__pycache__
 
 # Resultados de execução
+resultados/*.*
 resultados/*/*
 !resultados/*/.gitkeep
+
+programas_auxiliares/compilaResultado.py
+programas_auxiliares/geraTodasImagens.py
